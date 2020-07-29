@@ -13,7 +13,7 @@ namespace SmartHome_SMS
         private static readonly Logger Logger = LogManager.GetLogger("SmartHome_SMS");
 
         public static ZTE_MF823_Bridge modem;
-        public static SmartHome_Bridge smartdom;
+        public static SmartHome_Bridge smarthome;
 
         public static MainTask automat;
         public static ConsoleHandler console;
@@ -28,7 +28,7 @@ namespace SmartHome_SMS
             modem = new ZTE_MF823_Bridge();
 
             Logger.Info("Building Bridge over SmartHome");
-            smartdom = new SmartHome_Bridge();
+            smarthome = new SmartHome_Bridge();
 
             Logger.Info("Starting main Task");
             automat = new MainTask();

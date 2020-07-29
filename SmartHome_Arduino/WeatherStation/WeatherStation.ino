@@ -27,18 +27,6 @@ const byte house[8] PROGMEM = {
   0b01110,
   0b00000
 };
-
-const byte temperror[8] PROGMEM = {
-
-  0b01110,
-  0b10011,
-  0b10011,
-  0b10101,
-  0b10101,
-  0b11001,
-  0b01010,
-  0b00100
-};
 const byte sun[8] PROGMEM = {
 
   0b00000,
@@ -64,6 +52,12 @@ boolean whichTemp = true;
 
 //Pogodynka 2017 Pawel Reich, 2020!!
 
+void clearLine(uint8_t y) {
+  lcd.setCursor(0, y);
+  lcd.print("          ");
+  lcd.setCursor(0, y);
+}
+
 void setup() {
 
   Serial.begin(115200);
@@ -71,8 +65,7 @@ void setup() {
   lcd.begin(16, 2);
   lcd.createChar_P(0, celsius);
   lcd.createChar_P(1, house);
-  lcd.createChar_P(3, temperror);
-  lcd.createChar_P(4, sun);
+  lcd.createChar_P(2, sun);
   lcd.clear();
   lcd.print("Pogodynka 2020");
   lcd.setCursor(0, 1);
@@ -87,82 +80,41 @@ void setup() {
   sensors.request();
 
 }
+int ctr = 0;
+void updateLCD() {
 
-RTCDateTime printTime() {
+  lcd.setCursor(0,0);
+  lcd.print(rtc.dateFormat("d-m   H:i:s", rtc.getDateTime()));
+  if (ctr == 0 || ctr == 6)
+  {
+    ctr = 1;
+    if (sensors.available()) {
+      float temp1 = sensors.readTemperature(FA(insideSensorAddress));
+      float temp2 = sensors.readTemperature(FA(outsideSensorAddress));
 
-  lcd.setCursor(0, 0);
-  RTCDateTime rtctime = rtc.getDateTime();
-  if (rtctime.month < 10 ) lcd.print("0"); lcd.print(rtctime.month);  lcd.print(F("-"));
-  if (rtctime.day < 10 )   lcd.print("0"); lcd.print(rtctime.day);    lcd.print(F(" "));
-  if (rtctime.hour < 10)   lcd.print("0"); lcd.print(rtctime.hour);   lcd.print(F(":"));
-  if (rtctime.minute < 10) lcd.print("0"); lcd.print(rtctime.minute); lcd.print(F(":"));
-  if (rtctime.second < 10) lcd.print("0"); lcd.print(rtctime.second);
+      Serial.print(temp1);
+      Serial.print("$");
+      Serial.print(temp2);
+      Serial.print('\n');
 
-  return rtctime;
-}
+      sensors.request();
 
-void printTemp() {
-
-  if (sensors.available()) {
-    float temp1 = sensors.readTemperature(FA(insideSensorAddress));
-    float temp2 = sensors.readTemperature(FA(outsideSensorAddress));
-
-    Serial.print(temp1);
-    Serial.print("$");
-    Serial.print(temp2);
-    Serial.print('\n');
-
-    sensors.request();
-
-    if (whichTemp) {
-      secondCounter++;
-      if (secondCounter == 4) {
-        whichTemp = false;
-        secondCounter = 0;
-      }
       clearLine(1);
-      lcd.write(byte(1));
+      lcd.write(1);
       lcd.print(temp1);
-    } else {
-      secondCounter++;
-      if (secondCounter == 4) {
-        secondCounter = 0;
-        whichTemp = true;
-      }
-      if (temp2 != -273.15) {
-        clearLine(1);
-        lcd.write(byte(4));
+      lcd.print("    ");
+      if (temp2 != -273.15)
         lcd.print(temp2);
-      } else {
-        clearLine(1);
-        lcd.write(byte(4));
-        lcd.print("----");
-        lcd.setCursor(15, 1);
-        lcd.write(byte(3));
-        return;
-      }
-
+      else
+        lcd.print("-----");  
+      lcd.write(2);
     }
-
-    lcd.write(byte(0));
-    lcd.print(F("C"));
-
-    lcd.setCursor(14, 1);
-    lcd.print(F(" "));
-    return;
   }
-  lcd.setCursor(14, 1);
-  lcd.write(byte(3));
+  ctr++;
 }
 
 void loop() {
   if (rtc.isAlarm1()) {
-    printTime();
-    printTemp();
+    updateLCD();
   }
-}
-void clearLine(uint8_t y) {
-  lcd.setCursor(0, y);
-  lcd.print("          ");
-  lcd.setCursor(0, y);
 }

@@ -22,7 +22,18 @@ namespace SmartHome_SMS.Modem
 
         public async Task<List<SMS>> GetAllSMS()
         {
-            List<SMS> l = JsonConvert.DeserializeObject<ZTE_MF823_SMSLIST>(await HTTP_CLIENT.GetStringAsync(SMS_LIST)).messages;
+            string x;
+            try
+            {
+                x = await HTTP_CLIENT.GetStringAsync(SMS_LIST);
+            }
+            catch (HttpRequestException ex)
+            {
+                Logger.Fatal("CAN NOT REQUEST FOR SMS!");
+                await Task.Delay(10000);
+                return new List<SMS>();
+            }
+            List<SMS> l = JsonConvert.DeserializeObject<ZTE_MF823_SMSLIST>(x).messages;
             l.ForEach(sms => sms.Decode());
             return l;
         }
