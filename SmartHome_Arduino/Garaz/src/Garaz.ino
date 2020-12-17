@@ -94,9 +94,6 @@ void loop() {
     }
   }
 
-  // set the LED:
-  digitalWrite(ledPin, ledState);
-
   // save the reading. Next time through the loop, it'll be the lastButtonState:
   lastButtonState = reading;
 }
