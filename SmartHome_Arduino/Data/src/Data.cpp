@@ -1,9 +1,7 @@
 #include <ESP8266WiFi.h>
-#include <ESP8266mDNS.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
-#include <WiFiClient.h>
-#include <WiFiUdp.h>
+#include <Arduino.h>
 
 #ifdef ESP8266
 extern "C" {
@@ -13,12 +11,15 @@ extern "C" {
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "2"
+#define VERSION "4"
 #define API_REPORT "http://***REMOVED***/api/report.php?id="
 #define API_UPDATE "http://***REMOVED***/api/update.php?id="
 
+#define LED_BUILTIN 2
+
+void worker(String d);
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
   WiFi.mode(WIFI_STA);
@@ -33,9 +34,7 @@ void setup() {
 void loop() {
   if (Serial.available())
   {
-      digitalWrite(LED_BUILTIN, HIGH);
       String data = Serial.readStringUntil('\n');
-      digitalWrite(LED_BUILTIN, LOW);
       worker(data);
   }
 }
@@ -66,9 +65,13 @@ void worker(String d)
       }
       else
       {
-        digitalWrite(LED_BUILTIN, LOW);
-        Serial.print(payload);
-        digitalWrite(LED_BUILTIN, HIGH);
+        if (payload.length() > 0)
+        {
+          digitalWrite(LED_BUILTIN, LOW);
+          Serial.print(payload);
+          Serial.print('\n');
+          digitalWrite(LED_BUILTIN, HIGH);
+        }
       }
     }
     http.end();
