@@ -12,14 +12,12 @@ extern "C" {
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "15"
+#define VERSION "16"
 
-#define INTERVAL 400
+#define INTERVAL 200
 
 #define GARAZ_CZUJNIK 3
 #define ACTION 13
-
-#define DEBOUNCE 100
 
 String pingString;
 String updateString;
