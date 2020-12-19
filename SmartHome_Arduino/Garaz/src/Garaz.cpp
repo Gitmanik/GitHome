@@ -3,6 +3,8 @@
 #include <ESP8266httpUpdate.h>
 #include <Arduino.h>
 #include <Bounce2.h>
+#include <OneWire.h>
+#include <DallasTemperature.h>
 
 #ifdef ESP8266
 extern "C" {
@@ -12,12 +14,13 @@ extern "C" {
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "16"
+#define VERSION "18"
 
 #define INTERVAL 200
 
 #define GARAZ_CZUJNIK 3
 #define ACTION 13
+#define ONE_WIRE 1
 
 String pingString;
 String updateString;
@@ -28,8 +31,13 @@ HTTPClient http;
 const int relay_pins[] = {5,4,0,2,14,12};
 Bounce actionButton = Bounce();
 
+OneWire oneWire(ONE_WIRE);
+DallasTemperature sensors(&oneWire);
+
+
 void worker();
 void action();
+void syncTemperature();
 
 void setup()
 {
@@ -41,7 +49,9 @@ void setup()
 
   pinMode(GARAZ_CZUJNIK, INPUT);
   actionButton.attach(ACTION, INPUT);
-		actionButton.interval(50);
+  actionButton.interval(50);
+
+  sensors.begin();
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
@@ -63,6 +73,7 @@ void setup()
 }
 
 long previousMillis = 0;
+long termMillis = 0;
 
 void loop() {
   long currentMillis = millis();
@@ -71,8 +82,14 @@ void loop() {
     worker();
   }
 
+  if (currentMillis - termMillis >= 5000)
+  {
+    termMillis = currentMillis;
+    syncTemperature();
+  }
+
 		actionButton.update();
-		if (actionButton.fell())
+		if (actionButton.rose())
 			action();
 
 }
@@ -122,6 +139,20 @@ void action()
     String api3 = String(pingString);
     api3 += "_ACTION";
     api3 += "&data=1";
+
+    if (http.begin(client, api3)) {
+      http.GET();
+      http.end();
+  	}
+}
+
+void syncTemperature()
+{
+    sensors.requestTemperatures(); 
+    String api3 = String(pingString);
+    api3 += "_TEMP";
+    api3 += "&data=";
+    api3 += sensors.getTempCByIndex(0);
 
     if (http.begin(client, api3)) {
       http.GET();
