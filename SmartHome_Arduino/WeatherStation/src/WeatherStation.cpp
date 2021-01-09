@@ -4,6 +4,7 @@
 #include <DS3231.h>
 #include <LiquidCrystal.h>
 #include <Arduino.h>
+#include <IRremote.h>
 
 LiquidCrystal lcd(9, 4, 8, 7, 6, 5);
 
@@ -35,6 +36,9 @@ OneWire onewire(3);
 DS18B20 sensors(&onewire);
 const byte insideSensorAddress[8] PROGMEM = {0x28, 0xFF, 0x89, 0x5E, 0x62, 0x14, 0x3, 0x62};
 
+IRrecv irrecv(11);
+decode_results results;
+
 #define BACKLIGHT_PIN 2
 
 void clearLine(uint8_t y) {
@@ -64,6 +68,8 @@ void setup() {
 
   sensors.begin(12);
   sensors.request();
+
+  irrecv.enableIRIn();
 
   pinMode(BACKLIGHT_PIN, OUTPUT);
   pinMode(BACKLIGHT_PIN, LOW);
@@ -97,6 +103,12 @@ void loop() {
     updateLCD();
   }
 
+  if (irrecv.decode(&results)) {
+      Serial.print(results.value, HEX);
+      Serial.print('\n');
+      irrecv.resume(); // Receive the next value
+  }
+
   if (Serial.available())
   {
     String inp = Serial.readStringUntil('\n');
@@ -113,6 +125,12 @@ void loop() {
     if (inp.startsWith("H:"))
     {
       rtc.setDateTime(inp.substring(2).toInt());
+    }
+
+    if (inp.startsWith("T:"))
+    {
+      lcd.setCursor(6,1);
+      lcd.print(inp.substring(2));
     }
   }
 }
