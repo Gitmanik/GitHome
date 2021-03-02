@@ -1,4 +1,4 @@
-// #define SAMPLESIZE 500
+// #define SAMPLESIZE 250
 // #include <Arduino.h>
 
 // static unsigned int timings[SAMPLESIZE];

@@ -1,10 +1,15 @@
+#include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
-#include <Arduino.h>
+
+#include <Wire.h>
+#include "Adafruit_MCP23017.h"
+
 #include <Bounce2.h>
 #include <OneWire.h>
 #include <DallasTemperature.h>
+
 
 #ifdef ESP8266
 extern "C" {
@@ -14,44 +19,54 @@ extern "C" {
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "18"
+#define VERSION "20"
 
-#define INTERVAL 200
+#define INTERVAL 600
 
-#define GARAZ_CZUJNIK 3
-#define ACTION 13
-#define ONE_WIRE 1
+#define ACTION 12
+#define ONE_WIRE 5
 
+#define RELAYS_USED 3
+
+String garazDataString;
 String pingString;
 String updateString;
+String actionString;
 
 WiFiClient client;
 HTTPClient http;
 
-const int relay_pins[] = {5,4,0,2,14,12};
 Bounce actionButton = Bounce();
 
 OneWire oneWire(ONE_WIRE);
 DallasTemperature sensors(&oneWire);
 
+Adafruit_MCP23017 mcp; 
 
 void worker();
 void action();
 void syncTemperature();
+void updateButton();
 
 void setup()
 {
-  for (int i = 0; i < 6; i++)
+  //EKSPANDER I/O
+  Wire.begin(14,4);
+  mcp.begin();
+  mcp.pinMode(8,INPUT);
+  mcp.pullUp(8, HIGH);
+  for (int a = 0; a < 6; a++)
   {
-    pinMode(relay_pins[i], OUTPUT);
-    digitalWrite(relay_pins[i], HIGH);
+    mcp.pinMode(a, OUTPUT);
+    mcp.digitalWrite(a,1);
   }
 
-  pinMode(GARAZ_CZUJNIK, INPUT);
   actionButton.attach(ACTION, INPUT);
-  actionButton.interval(50);
+
+  pinMode(16,OUTPUT);
 
   sensors.begin();
+  sensors.requestTemperatures();
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
@@ -65,6 +80,14 @@ void setup()
   updateString += VERSION;
   updateString += "&id=";
   updateString += wifi_station_get_hostname();
+
+  garazDataString = String(pingString);
+  garazDataString += "_DATA";
+  garazDataString += "&data=";
+
+  actionString = String(pingString);
+  actionString += "_ACTION";
+  actionString += "&data=1";
   
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     delay(5000);
@@ -79,68 +102,54 @@ void loop() {
   long currentMillis = millis();
   if (currentMillis - previousMillis >= INTERVAL) {
     previousMillis = currentMillis;
+    digitalWrite(16,LOW);
     worker();
+    digitalWrite(16,HIGH);
   }
 
-  if (currentMillis - termMillis >= 5000)
+  if (currentMillis - termMillis >= 2500)
   {
     termMillis = currentMillis;
     syncTemperature();
   }
 
-		actionButton.update();
-		if (actionButton.rose())
-			action();
+  updateButton();
+}
+
+void updateButton()
+{
+  actionButton.update();
+  if (actionButton.rose())
+    action();
 
 }
 
 void worker()
 {
-
-  for (int i = 0; i < 6; i++)
+  for (int i = 0; i < RELAYS_USED; i++)
   {
-    String api_call = String(pingString);
-    api_call += i;
-  
-    if (http.begin(client, api_call)) {
+    updateButton();
+    if (http.begin(client, pingString + i)) {
       int httpCode = http.GET();
       if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
         String payload = http.getString();
         if (payload == "true")
         {
-          digitalWrite(relay_pins[i], LOW);
+          mcp.digitalWrite(5-i, LOW);
         }
         if (payload == "false")
         {
-          digitalWrite(relay_pins[i], HIGH);
+          mcp.digitalWrite(5-i, HIGH);
         }
-        if (payload == "UPDATE")
-        {
-          ESPhttpUpdate.update(client, updateString);
-          ESP.restart();
-        }
-    }
+      }
     http.end();
-  }
-  }
-  		String api2 = String(pingString);
-    api2 += "_GARAZ";
-    api2 += "&data=";
-    api2 += digitalRead(GARAZ_CZUJNIK);
-  
-    if (http.begin(client, api2)) {
-      http.GET();
-      http.end();
     }
+  }
 }
 
 void action()
 {
-    String api3 = String(pingString);
-    api3 += "_ACTION";
-    api3 += "&data=1";
-
-    if (http.begin(client, api3)) {
+    if (http.begin(client, actionString)) {
       http.GET();
       http.end();
   	}
@@ -148,14 +157,17 @@ void action()
 
 void syncTemperature()
 {
-    sensors.requestTemperatures(); 
-    String api3 = String(pingString);
-    api3 += "_TEMP";
-    api3 += "&data=";
-    api3 += sensors.getTempCByIndex(0);
-
-    if (http.begin(client, api3)) {
-      http.GET();
-      http.end();
+    if (http.begin(client, garazDataString + mcp.digitalRead(8) + ";" + sensors.getTempCByIndex(0))) {
+      int httpCode = http.GET();
+      if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
+        String payload = http.getString();
+        if (payload == "UPDATE")
+        {
+          ESPhttpUpdate.update(client, updateString);
+          ESP.restart();
+        }
   	}
+    http.end();
+    sensors.requestTemperatures();
+}
 }

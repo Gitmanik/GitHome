@@ -4,6 +4,7 @@
 #include <ESP8266httpUpdate.h>
 #include <WiFiClient.h>
 #include <WiFiUdp.h>
+#include <Arduino.h>
 
 #ifdef ESP8266
 extern "C" {
@@ -13,19 +14,18 @@ extern "C" {
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "1"
+#define VERSION "2"
 #define RELAY_PIN 0
 #define API_REPORT "http://***REMOVED***/api/report.php?id="
 #define API_UPDATE "http://***REMOVED***/api/update.php?id="
-#define API_LOG    "http://***REMOVED***/api/log.php&id="
 #define INTERVAL 400
 
 void setup() {
 
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, HIGH);
-  pinMode(LED_BUILTIN, OUTPUT);
-  digitalWrite(LED_BUILTIN, HIGH);
+  pinMode(2, OUTPUT); // Builtin.
+  digitalWrite(2, HIGH);
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 

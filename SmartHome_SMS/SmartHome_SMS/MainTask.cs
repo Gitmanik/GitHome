@@ -29,11 +29,12 @@ namespace SmartHome_SMS
 
                         Logger.Info($"Received: {command}");
                         string resp = await Program.smarthome.HandleAsync(command);
-                        await Program.modem.SendSMS(new SMS()
-                        {
-                            number = sms.number,
-                            content = resp
-                        });
+                        Logger.Info("NOT SENDING");
+                        //await Program.modem.SendSMS(new SMS()
+                        //{
+                        //    number = sms.number,
+                        //    content = resp
+                        //});
                     }
                     await Task.Delay(1000);
                 }

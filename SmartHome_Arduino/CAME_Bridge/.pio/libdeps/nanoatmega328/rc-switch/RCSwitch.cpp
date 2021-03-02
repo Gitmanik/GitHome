@@ -80,8 +80,8 @@ static const RCSwitch::Protocol PROGMEM proto[] = {
   { 500, {  6, 14 }, {  1,  2 }, {  2,  1 }, false },    // protocol 5
   { 450, { 23,  1 }, {  1,  2 }, {  2,  1 }, true },      // protocol 6 (HT6P20B)
   { 150, {  2, 62 }, {  1,  6 }, {  6,  1 }, false },     // protocol 7 (HS2303-PT, i. e. used in AUKEY Remote)
-  // { 330, { 1,  72 }, { 1, 2 }, { 2, 1 }, true } // came
-  { 330, { 1,  70 }, { 1, 2 }, { 2, 1 }, true } // x
+  // { 320, { 72,1}, { 1, 2 }, { 2, 1 }, true } // came
+  { 320, { 72,1}, { 1, 2 }, { 2, 1 }, true } // came
 };
 
 enum {
