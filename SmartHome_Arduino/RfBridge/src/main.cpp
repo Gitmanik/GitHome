@@ -35,14 +35,14 @@ void print(String text, String text2)
 void setup() {
 
   Serial.begin(9600);
-  while (lcd.begin(16, 2, LCD_5x8DOTS, D5, D6) != 1) //colums - 20, rows - 4
+  while (lcd.begin(16, 2, LCD_5x8DOTS, D5, D6) != 1)
   {
     Serial.println(F("PCF8574 is not connected or lcd pins declaration is wrong. Only pins numbers: 4,5,6,16,11,12,13,14 are legal."));
     delay(5000);
     ESP.restart();
   }
 
-  print(F("RfBridge"), F("Laczenie.."));
+  print("RfBridge", "Gitmanik, 2021");
 
   API_REPORT += wifi_station_get_hostname();
   API_UPDATE += wifi_station_get_hostname();
@@ -57,11 +57,9 @@ void setup() {
     delay(5000);
     ESP.restart();
   }
-
-  print(F("Adres IP"), WiFi.localIP().toString());
   
-  mySwitch.enableTransmit(5);
   static const RCSwitch::Protocol came = { 320, { 74  , 1 }, { 1, 2 }, { 2, 1 }, true };
+  mySwitch.enableTransmit(5);
   mySwitch.setProtocol(came);
   mySwitch.setRepeatTransmit(7);
 }
@@ -69,14 +67,14 @@ long previousMillis = 0;
 void loop() {
   long currentMillis = millis();
 
-  if (print_timer != -1 && currentMillis - print_timer >= 3000)
+  if (print_timer != -1 && currentMillis - print_timer >= 10000)
   {
     print_timer = -1;
     lcd.noBacklight();
     lcd.clear();
-    lcd.print("RfBridge");
+    lcd.print(F("RfBridge"));
     lcd.setCursor(0,1);
-    lcd.print("Gotowy");
+    lcd.print(F("Gotowy"));
   }
 
   if (currentMillis - previousMillis >= 300) {
