@@ -9,12 +9,12 @@
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "25"
+#define VERSION "29"
 
 #define INTERVAL 500
 #define ACTION 12
 #define STATUS_LED 16
-#define RELAYS_USED 3
+#define RELAYS_USED 4
 
 String dataString;
 String pingString;
@@ -28,9 +28,11 @@ DallasTemperature sensors(&oneWire);
 
 Adafruit_MCP23017 mcp;
 
+int relayStates[RELAYS_USED + 1];
+long lastSpike;
 void syncRelays();
 void syncData();
-ICACHE_RAM_ATTR void onActionInterrupt();
+IRAM_ATTR void onActionInterrupt();
 
 volatile int state;
 volatile long lastDebounceTime;
@@ -89,7 +91,7 @@ void loop() {
   if (triggerAction)
   {
     triggerAction = false;
-    if (http.begin(client, actionString)) {
+    if ((currentMillis - lastSpike >= 500) && http.begin(client, actionString)) {
       http.GET();
       http.end();
     }
@@ -105,9 +107,19 @@ void syncRelays()
         String payload = http.getString();
         if (payload == "false")
         {
+          if (relayStates[i] == LOW)
+          {
+            lastSpike = millis();
+          }
+          relayStates[i] = HIGH;
           mcp.digitalWrite(5-i, HIGH);
         } else if (payload == "true")
         {
+          if (relayStates[i] == HIGH)
+          {
+            lastSpike = millis();
+          }
+          relayStates[i] = LOW;
           mcp.digitalWrite(5-i, LOW);
         }
       }
@@ -133,7 +145,7 @@ void syncData()
   }
 }
 
-ICACHE_RAM_ATTR void onActionInterrupt() {
+IRAM_ATTR void onActionInterrupt() {
   int reading = digitalRead(ACTION);
 
   if(reading == state) return;

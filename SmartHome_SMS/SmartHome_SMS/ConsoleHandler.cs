@@ -31,6 +31,11 @@ namespace SmartHome_SMS
 
                     if (command == "unread")
                         Logger.Info("Nieodczytane SMS: \n" + string.Join<SMS>(",\n", (await Program.modem.GetUnreadSMS()).ToArray()));
+
+
+                    if (command.StartsWith("sig "))
+                        await Program.automat.SendSignal(command.Split(' ')[1]);
+
                     continue;
                 }
 

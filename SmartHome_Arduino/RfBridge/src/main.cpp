@@ -13,7 +13,7 @@
 
 RCSwitch mySwitch = RCSwitch();
 
-LiquidCrystal_I2C lcd(PCF8574_ADDR_A21_A11_A01, 4, 5, 6, 16, 11, 12, 13, 14, POSITIVE);
+// LiquidCrystal_I2C lcd(PCF8574_ADDR_A21_A11_A01, 4, 5, 6, 16, 11, 12, 13, 14, POSITIVE);
 
 void worker();
 String API_REPORT = "http://***REMOVED***/api/report.php?version=" VERSION "&id=";
@@ -24,29 +24,29 @@ int print_timer;
 
 void print(String text, String text2)
 {
-  lcd.backlight();
-  lcd.clear();
-  lcd.print(text);
-  lcd.setCursor(0,1);
-  lcd.print(text2);
+  // lcd.backlight();
+  // lcd.clear();
+  // lcd.print(text);
+  // lcd.setCursor(0,1);
+  // lcd.print(text2);
+  
+  Serial.print(text);
+  Serial.print(' ');
+  Serial.println(text2);
   print_timer = millis();
 }
 
 void setup() {
 
   Serial.begin(9600);
-  while (lcd.begin(16, 2, LCD_5x8DOTS, D5, D6) != 1)
-  {
-    Serial.println(F("PCF8574 is not connected or lcd pins declaration is wrong. Only pins numbers: 4,5,6,16,11,12,13,14 are legal."));
-    delay(5000);
-    ESP.restart();
-  }
+  // while (lcd.begin(16, 2, LCD_5x8DOTS, D7, D6) != 1)
+  // {
+  //   Serial.println(F("PCF8574 is not connected or lcd pins declaration is wrong. Only pins numbers: 4,5,6,16,11,12,13,14 are legal."));
+  //   delay(5000);
+  //   ESP.restart();
+  // }
 
   print("RfBridge", "Gitmanik, 2021");
-
-  API_REPORT += wifi_station_get_hostname();
-  API_UPDATE += wifi_station_get_hostname();
-  payload.reserve(128);
 
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, HIGH);
@@ -57,9 +57,17 @@ void setup() {
     delay(5000);
     ESP.restart();
   }
+
+  API_REPORT += wifi_station_get_hostname();
+  API_UPDATE += wifi_station_get_hostname();
+  payload.reserve(128);
+
+  Serial.println(WiFi.localIP().toString());
+  Serial.println(wifi_station_get_hostname());
+  Serial.println(API_REPORT);
   
   static const RCSwitch::Protocol came = { 320, { 74  , 1 }, { 1, 2 }, { 2, 1 }, true };
-  mySwitch.enableTransmit(5);
+  mySwitch.enableTransmit(D5);
   mySwitch.setProtocol(came);
   mySwitch.setRepeatTransmit(7);
 }
@@ -70,11 +78,11 @@ void loop() {
   if (print_timer != -1 && currentMillis - print_timer >= 10000)
   {
     print_timer = -1;
-    lcd.noBacklight();
-    lcd.clear();
-    lcd.print(F("RfBridge"));
-    lcd.setCursor(0,1);
-    lcd.print(F("Gotowy"));
+    // lcd.noBacklight();
+    // lcd.clear();
+    // lcd.print(F("RfBridge"));
+    // lcd.setCursor(0,1);
+    // lcd.print(F("Gotowy"));
   }
 
   if (currentMillis - previousMillis >= 300) {
