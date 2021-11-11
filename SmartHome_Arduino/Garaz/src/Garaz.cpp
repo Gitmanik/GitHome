@@ -9,16 +9,20 @@
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "29"
+#define VERSION "34"
 
+//Action button
 #define INTERVAL 500
 #define ACTION 12
+
 #define STATUS_LED 16
+
 #define RELAYS_USED 4
 
 String dataString;
 String pingString;
 String actionString;
+String nfcString;
 
 WiFiClient client;
 HTTPClient http;
@@ -29,9 +33,10 @@ DallasTemperature sensors(&oneWire);
 Adafruit_MCP23017 mcp;
 
 int relayStates[RELAYS_USED + 1];
-long lastSpike;
-void syncRelays();
-void syncData();
+long relayUsed;
+void sendRelays();
+void sendDoorAndTemp();
+void sendNFC(String code);
 IRAM_ATTR void onActionInterrupt();
 
 volatile int state;
@@ -40,10 +45,12 @@ volatile bool triggerAction;
 
 void setup()
 {
+  Serial.begin(9600); // NFC
+
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASS);
 
-  Wire.begin(14,4);
+  Wire.begin(14,4); // Relays
   mcp.begin();
   mcp.pinMode(8,INPUT);
   mcp.pullUp(8, HIGH);
@@ -53,7 +60,8 @@ void setup()
     mcp.digitalWrite(a,1);
   }
 
-  pinMode(ACTION, INPUT);
+  pinMode(ACTION, INPUT); // Action button (Garage door)
+  
   pinMode(STATUS_LED,OUTPUT);
   attachInterrupt(ACTION, onActionInterrupt, CHANGE);
 
@@ -63,6 +71,7 @@ void setup()
   pingString      = String("http://***REMOVED***/api/report.php?version=") + VERSION   + "&id="    + wifi_station_get_hostname();
   dataString      = pingString                                            + "_DATA"   + "&data=";
   actionString    = pingString                                            + "_ACTION" + "&data=1";
+  nfcString       = pingString                                            + "_NFC"    + "&data=";
 
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     delay(5000);
@@ -76,28 +85,36 @@ long termMillis = 0;
 
 void loop() {
   long currentMillis = millis();
+
+  if (Serial.available())
+  {
+    String code = Serial.readStringUntil('\n');
+    code.remove(code.length() - 1);
+    sendNFC(code); //NFC sends \r\n (meh)
+  }
+
   if (currentMillis - previousMillis >= INTERVAL) {
     previousMillis = currentMillis;
     digitalWrite(STATUS_LED,LOW);
-    syncRelays();
+    sendRelays();
     digitalWrite(STATUS_LED,HIGH);
   }
 
   if (currentMillis - termMillis >= 2500)
   {
     termMillis = currentMillis;
-    syncData();
+    sendDoorAndTemp();
   }
   if (triggerAction)
   {
     triggerAction = false;
-    if ((currentMillis - lastSpike >= 500) && http.begin(client, actionString)) {
+    if ((currentMillis - relayUsed >= 500) && http.begin(client, actionString)) {
       http.GET();
       http.end();
     }
   }
 }
-void syncRelays()
+void sendRelays()
 {
   for (int i = 0; i < RELAYS_USED; i++)
   {
@@ -109,7 +126,7 @@ void syncRelays()
         {
           if (relayStates[i] == LOW)
           {
-            lastSpike = millis();
+            relayUsed = millis();
           }
           relayStates[i] = HIGH;
           mcp.digitalWrite(5-i, HIGH);
@@ -117,7 +134,7 @@ void syncRelays()
         {
           if (relayStates[i] == HIGH)
           {
-            lastSpike = millis();
+            relayUsed = millis();
           }
           relayStates[i] = LOW;
           mcp.digitalWrite(5-i, LOW);
@@ -128,7 +145,14 @@ void syncRelays()
   }
 }
 
-void syncData()
+void sendNFC(String code)
+{
+  if (http.begin(client, nfcString + code)) {
+    http.GET();
+    http.end();
+  }
+}
+void sendDoorAndTemp()
 {
   if (http.begin(client, dataString + mcp.digitalRead(8) + ";" + sensors.getTempCByIndex(0))) {
     int httpCode = http.GET();
