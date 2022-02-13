@@ -9,7 +9,7 @@
 
 #define WIFI_SSID "***REMOVED***"
 #define WIFI_PASS "***REMOVED***"
-#define VERSION "34"
+#define VERSION "35"
 
 //Action button
 #define INTERVAL 500
@@ -17,7 +17,7 @@
 
 #define STATUS_LED 16
 
-#define RELAYS_USED 4
+#define RELAYS_USED 5
 
 String dataString;
 String pingString;
