@@ -2,19 +2,14 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
 #include <Arduino.h>
-
+#include "../../credentials.h"
 #ifdef ESP8266
 extern "C" {
 #include "user_interface.h"
 }
 #endif
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "4"
-#define API_REPORT "http://***REMOVED***/api/report.php?id="
-#define API_UPDATE "http://***REMOVED***/api/update.php?id="
-
 #define LED_BUILTIN 2
 
 void worker(String d);

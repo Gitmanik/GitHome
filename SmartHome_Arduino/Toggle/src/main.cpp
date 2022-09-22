@@ -2,9 +2,8 @@
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
 #include <Arduino.h>
+#include "../../credentials.h"
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "2"
 
 #define RELAY_PIN 0
@@ -37,7 +36,7 @@ void setup() {
   }
 
   client.setNoDelay(1);
-  pingString = String("http://***REMOVED***/api/report.php?version=") + VERSION + "&id=" + wifi_station_get_hostname();
+  pingString = String(API_REPORT) + wifi_station_get_hostname() + "&version=" + VERSION;
 }
 
 void loop() {
@@ -62,7 +61,7 @@ void syncRelay()
         digitalWrite(RELAY_PIN, HIGH);
       } else if (payload == "UPDATE")
       {
-        ESPhttpUpdate.update(client, String("http://***REMOVED***/api/update.php?id=") + wifi_station_get_hostname());
+        ESPhttpUpdate.update(client, String(API_UPDATE) + wifi_station_get_hostname());
         ESP.restart();
       }
     }

@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
+#include "../../credentials.h"
 
 #ifdef ESP8266
 extern "C" {
@@ -8,11 +9,7 @@ extern "C" {
 }
 #endif
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "1"
-#define API_REPORT "http://***REMOVED***/api/report.php?id="
-#define API_UPDATE "http://***REMOVED***/api/update.php?id="
 
 volatile boolean state_changed = false;
 ICACHE_RAM_ATTR void changeState()

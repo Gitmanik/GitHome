@@ -11,7 +11,7 @@ namespace SmartHome_SMS.SmartDom
     {
         private static readonly Logger Logger = LogManager.GetLogger("SmartHome Bridge");
 
-        private static readonly Uri SMS_API = new Uri("http://***REMOVED***/api/sms.php");
+        private static readonly Uri SMS_API = new Uri("http://192.168.8.51/api/sms.php");
 
         private readonly HttpClient HTTP_CLIENT = new HttpClient();
 

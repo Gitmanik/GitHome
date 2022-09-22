@@ -1,11 +1,11 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266httpUpdate.h>
-
 #include <IRremoteESP8266.h>
 #include <IRrecv.h>
 #include <IRutils.h>
 #include <Arduino.h>
+#include "../../credentials.h"
 
 #ifdef ESP8266
 extern "C" {
@@ -13,8 +13,6 @@ extern "C" {
 }
 #endif
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "2"
 
 IRrecv irrecv(2);
@@ -33,16 +31,16 @@ void setup() {
     ESP.restart();
   }
 
-  pingString = String("http://***REMOVED***/api/report.php?version=");
-  pingString += VERSION;
-  pingString += "&id=";
+  pingString = String(API_REPORT);
   pingString += wifi_station_get_hostname();
+  pingString += "&version=";
+  pingString += VERSION;
   pingString += "&data=";
 
-  updateString = String("http://***REMOVED***/api/update.php?version=");
-  updateString += VERSION;
-  updateString += "&id=";
+  updateString = String(API_UPDATE);
   updateString += wifi_station_get_hostname();
+  updateString += "&version=";
+  updateString += VERSION;
 
   irrecv.enableIRIn();
 }

@@ -6,9 +6,8 @@
 #include "Adafruit_MCP23017.h"
 #include <OneWire.h>
 #include <DallasTemperature.h>
+#include "../../credentials.h"
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "35"
 
 //Action button
@@ -68,10 +67,12 @@ void setup()
   sensors.begin();
   sensors.requestTemperatures();
 
-  pingString      = String("http://***REMOVED***/api/report.php?version=") + VERSION   + "&id="    + wifi_station_get_hostname();
-  dataString      = pingString                                            + "_DATA"   + "&data=";
-  actionString    = pingString                                            + "_ACTION" + "&data=1";
-  nfcString       = pingString                                            + "_NFC"    + "&data=";
+  pingString      = String(API_REPORT) +  wifi_station_get_hostname();
+  dataString      = pingString                                            + "_DATA"   + "&version=" + VERSION + "&data=";
+  actionString    = pingString                                            + "_ACTION" + "&version=" + VERSION + "&data=1";
+  nfcString       = pingString                                            + "_NFC"    + "&version=" + VERSION + "&data=";
+  
+  pingString = pingString + "&version=" + VERSION;
 
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     delay(5000);
@@ -160,7 +161,7 @@ void sendDoorAndTemp()
       String payload = http.getString();
       if (payload == "UPDATE")
       {
-        ESPhttpUpdate.update(client, String("http://***REMOVED***/api/update.php?id=") + wifi_station_get_hostname());
+        ESPhttpUpdate.update(client, String(API_UPDATE) + wifi_station_get_hostname());
         ESP.restart();
       }
     }

@@ -3,17 +3,15 @@
 #include <ESP8266httpUpdate.h>
 #include <RCSwitch.h>
 #include <Arduino.h>
-
 #include <Wire.h>
+#include "../../credentials.h"
 
-#define WIFI_SSID "***REMOVED***"
-#define WIFI_PASS "***REMOVED***"
 #define VERSION "4"
 
 RCSwitch mySwitch = RCSwitch();
 void worker();
-String API_REPORT = "http://***REMOVED***/api/report.php?version=" VERSION "&id=";
-String API_UPDATE = "http://***REMOVED***/api/update.php?id=";
+String pingString = API_REPORT;
+String updateString = API_UPDATE;
 String payload;
 
 void setup() {
@@ -27,13 +25,14 @@ void setup() {
     ESP.restart();
   }
 
-  API_REPORT += wifi_station_get_hostname();
-  API_UPDATE += wifi_station_get_hostname();
+  pingString += wifi_station_get_hostname() + "&version=" + VERSION;
+  updateString += wifi_station_get_hostname() + "&version=" + VERSION;
+
   payload.reserve(128);
 
   Serial.println(WiFi.localIP().toString());
   Serial.println(wifi_station_get_hostname());
-  Serial.println(API_REPORT);
+  Serial.println(pingString);
   
   static const RCSwitch::Protocol came = { 320, { 74, 1 }, { 1, 2 }, { 2, 1 }, true };
   // static const RCSwitch::Protocol came = { 304, { 73, 3 }, { 1, 2 }, { 2, 1 }, true };
@@ -55,14 +54,14 @@ HTTPClient http;
 
 void worker()
 {
-  if (http.begin(client, API_REPORT)) {
+  if (http.begin(client, pingString)) {
     int httpCode = http.GET();
     if (httpCode == HTTP_CODE_OK || httpCode == HTTP_CODE_MOVED_PERMANENTLY) {
       
       payload = http.getString();
       if (payload == "UPDATE")
       {
-        ESPhttpUpdate.update(client, API_UPDATE);
+        ESPhttpUpdate.update(client, updateString);
         ESP.restart();
       }
       else
