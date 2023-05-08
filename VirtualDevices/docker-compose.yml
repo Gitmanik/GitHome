@@ -1,0 +1,13 @@
+version: "3.7"
+
+name: smarthome_vd
+
+services:
+  virtualdevices:
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    network_mode: host

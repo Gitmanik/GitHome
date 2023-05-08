@@ -11,7 +11,7 @@ Ad-hoc written smart home client </br>
 
 ## Preparing
 
-Rename **example_config.py** to **config.py** and fill with devices according to your needs.
+Fill **config.py** and with devices (and server ip) according to your needs.
 
 ## Used
 
@@ -21,5 +21,6 @@ Rename **example_config.py** to **config.py** and fill with devices according to
 
 ### Libraries
 
-* Luma python library for screen handling
-* pad4pi python library for keypad matrix handling
+* tinytuya
+* requests
+* Docker for containerizing application
