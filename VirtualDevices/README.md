@@ -11,7 +11,7 @@ SmartHome Virtual Client providing access to various actions
 
 ## Recommended deployment
 
-Fill **config.py** and with devices (and server ip) according to your needs. Provide this file via Docker as ```/data/config.py```
+Fill **config.py** and with devices (and server ip) according to your needs. Provide this file via Docker as ```/app/config.py```
 
 Set **network_mode** to **host**!
 
