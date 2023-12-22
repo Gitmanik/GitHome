@@ -2,6 +2,8 @@ name: Builds package for VirtualDevices
 
 on:
   push:
+    paths:
+      - 'VirtualDevices/**'
     branches: ['master']
 
 env:
