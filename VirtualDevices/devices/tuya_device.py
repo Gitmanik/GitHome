@@ -19,29 +19,11 @@ class TUYA_BulbDevice(object):
 
         self.saved_state = state
 
-        data = self.d.status()
-        logging.info(data)
-        if data['dps']['20'] == state:
-            logging.info(f"{self.id} Already in desired state")
-            return True
+        logging.info(f"Setting {self.id} to {state}")
 
-        logging.info(f"Toggling {self.id} {state}")
-
-        if data['dps']['20'] == True:
-            self.d.turn_off()
-        else:
+        if state:
             self.d.turn_on()
-
+        else:
+            self.d.turn_off()
 
         return True
-
-
-
-# data = d.status()
-# print(data)
-# if data['dps']['20'] == False:
-# 	d.turn_on()
-# 	d.set_mode('scene')
-# 	d.set_value(25, '07464602000003e803e800000000464602007803e803e80000000046460200f003e803e800000000464602003d03e803e80000000046460200ae03e803e800000000464602011303e803e800000000')
-# else:
-# 	d.turn_off()

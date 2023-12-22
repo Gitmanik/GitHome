@@ -1,6 +1,6 @@
 # SmartHome - VirtualDevices
 
-Ad-hoc written smart home client </br>
+SmartHome Virtual Client providing access to various actions
 
 ## Supported virtual devices
 
@@ -9,18 +9,16 @@ Ad-hoc written smart home client </br>
 * Web GET/POST toggle (e.g. remote projector switching)
 * WakeOnLan toggle
 
-## Preparing
+## Recommended deployment
 
-Fill **config.py** and with devices (and server ip) according to your needs.
+Fill **config.py** and with devices (and server ip) according to your needs. Provide this file via Docker as ```/data/config.py```
 
-## Used
+Set **network_mode** to **host**!
 
-* OLED with sh1106 chip
-* Generic 4x4 matrix keypad from China
-* RaspberryPi Zero as a brain
+Set **restart** policy to **unless_stopped**
 
-### Libraries
+## Used libraries
 
 * tinytuya
 * requests
-* Docker for containerizing application
+* Docker
