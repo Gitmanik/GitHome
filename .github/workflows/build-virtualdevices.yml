@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: SH_VirtualDevices
+  IMAGE_NAME: ${{ github.repository_owner }}/SH_VirtualDevices
 
 jobs:
   build:
