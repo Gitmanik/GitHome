@@ -2,7 +2,7 @@ name: Builds package for VirtualDevices
 
 on:
   push:
-    branches: ['main']
+    branches: ['master']
 
 env:
   REGISTRY: ghcr.io
