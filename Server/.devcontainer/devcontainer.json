@@ -1,0 +1,14 @@
+{
+	"name": "Local Dockerfile",
+	"build": {
+		"context": "..",
+		"dockerfile": "../Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+                "bmewburn.vscode-intelephense-client"
+			]
+		}
+	}
+}
