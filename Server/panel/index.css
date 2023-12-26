@@ -1,0 +1,79 @@
+.devices {
+	padding:0;
+	justify-content: center;
+	display: inline-block;
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(2,48%);
+	grid-gap: 1%;
+	margin: auto;
+}
+.devices li {
+	overflow:hidden;
+	height: 20em;
+}
+
+.device button {
+	height:100%;
+	width:100%;
+	border: 0;
+	font-family: 'ABeeZee';
+	color: white;
+	font-size: 200%;
+}
+
+.box .data {
+	text-align: center;
+	color: white;
+	height:100%;
+	font-size: 150%;
+	display: flex;
+	align-items: center; /* Vertical center alignment */
+	justify-content: center; /* Horizontal center alignment */
+}
+
+.buttonstate_true {
+	background-color: #ffffff20;
+}
+.buttonstate_false {
+	background-color: #00000040;
+}
+.momentary_toggle {
+	background-color: #00000020;
+	/* background-color: #3ec49720; */
+}
+
+.chart {
+	height:500px;
+	margin: auto;
+	margin-top:8em;
+	width: 100%;
+}
+
+@media (min-width: 1200px), (orientation: landscape) {
+	.chart {
+		width: 90%;
+	}
+
+	.device button {
+		font-size:150%;
+	}
+
+	.box .data {
+		font-size:100%;
+	}
+
+	.devices {
+		grid-template-columns: repeat(3,30%);
+	}
+	
+	.devices li {
+		height:8em;
+	}
+}
+
+@media (min-width: 1500px) {
+	.devices {
+		width:70%;
+	}
+}

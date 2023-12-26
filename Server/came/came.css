@@ -1,0 +1,72 @@
+.devices {
+	padding:0;
+	justify-content: center;
+	display: inline-block;
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(2,48%);
+	grid-gap: 1%;
+}
+.devices li {
+	overflow:hidden;
+	height: 30em;
+}
+
+.name {
+	display: flex;
+	align-items: center; /* Vertical center alignment */
+	justify-content: center; /* Horizontal center alignment */
+	text-align:center;
+	color: white;
+	height: 25%;
+	width: 100%;
+	font-size:200%;
+}
+
+.last_command {
+	background-color: #00000060;
+}
+
+.command {
+	background-color: #00000000;
+}
+
+.buttons {
+	height:75%;
+	background-color: #00000020;
+}
+.buttons button {
+	overflow: hidden;
+	height:33.3%;
+	width:100%;
+	border: 0;
+	font-size: xx-large;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+
+@media (min-width: 600px) {
+
+	.devices li {
+		height:20em;
+	}
+	
+	.box .name {
+		font-size:100%;
+	}
+}
+
+@media (min-width: 1200px), (orientation: landscape) {
+	.devices {
+		grid-template-columns: repeat(5,17%);
+		margin:auto;
+	}
+}
+
+@media (min-width: 1500px) and (orientation: landscape) {
+	.devices {
+		width:70%;
+	}
+}
