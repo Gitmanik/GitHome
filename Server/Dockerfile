@@ -1,9 +1,9 @@
 FROM php:7.4-apache
 
 WORKDIR /var/www/html
+RUN docker-php-ext-install pdo_mysql
 
 RUN apt update && apt -y install cron
-
 COPY cron_run_every_second /etc/cron.d/cron_run_every_second
 
 RUN chmod 0644 /etc/cron.d/cron_run_every_second
