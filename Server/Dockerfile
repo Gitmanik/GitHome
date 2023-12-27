@@ -12,6 +12,8 @@ RUN crontab /etc/cron.d/smarthome
 COPY build/logging.ini /usr/local/etc/php/conf.d/logging.ini
 
 RUN rm -rf build
+RUN rm Dockerfile
+RUN rm -rf .devcontainer
 
 EXPOSE 80
 
