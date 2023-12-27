@@ -17,6 +17,7 @@
 	<ul class="devices"> 
 	
 	<?php
+		error_reporting(E_ERROR);
 		require_once "../api/common.php";
 
 		install_cookie();
