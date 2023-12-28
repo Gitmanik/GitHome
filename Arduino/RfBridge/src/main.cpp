@@ -6,7 +6,7 @@
 #include <Wire.h>
 #include "../../credentials.h"
 
-#define VERSION "8"
+#define VERSION "9"
 
 #define MAX_RAW_DATA_SIZE 512
 #define REPEAT_COUNT 10
@@ -47,7 +47,7 @@ long previousMillis = 0;
 void loop() {
   long currentMillis = millis();
 
-  if (currentMillis - previousMillis >= 1000) {
+  if (currentMillis - previousMillis >= 300) {
     previousMillis = currentMillis;
     worker();
   }
