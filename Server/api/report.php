@@ -1,6 +1,7 @@
 <?php
 require_once "pdo_connect.php";
 require_once "device.php";
+require_once "common.php";
 
 $device = Device::fromDeviceID($pdo, $_GET["id"]);
 if(!$device)
@@ -24,7 +25,6 @@ else
     }
     catch (Throwable $e)
     {
-        require_once "common.php";
         put_log($pdo, $device->device_id, $e->getTraceAsString() . "\n" . $e->getMessage(), 2);
     }
 }
