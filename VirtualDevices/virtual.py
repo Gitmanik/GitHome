@@ -6,7 +6,7 @@ import sys
 import logging
 
 if __name__ == "__main__":
-    print("SmartHome VirtualDevices Client by Gitmanik, 2020-2023")
+    print("SmartHome VirtualDevices Client by Gitmanik, 2020-2024")
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     try:
         while True:
