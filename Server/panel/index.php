@@ -17,6 +17,7 @@
 	<ul class="devices"> 
 	
 	<?php
+		$test= microtime(true);
 		error_reporting(E_ERROR);
 		require_once "../api/common.php";
 
@@ -57,7 +58,9 @@
 			}
 			echo "</li>";
 		}
-
+		$t2 = microtime(true);
+		echo $t2-$test;
+		
 	?>
 	</ul>
 	<div class="chart">

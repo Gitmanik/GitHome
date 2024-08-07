@@ -1,4 +1,6 @@
 <?php
+require_once "../GitPHP/GitPHP.php";
+
 require_once "device.php";
 require_once "box.php";
 date_default_timezone_set('Europe/Warsaw');
@@ -10,12 +12,7 @@ function install_cookie()
 
 function put_log($pdo, $id, $data, $level = 0)
 {
-    if($stmt = $pdo->prepare("INSERT INTO logs (device_id, data, level) VALUES (:id, :data, :level)")){
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':data', $data);
-        $stmt->bindParam(':level', $level);
-        $stmt->execute();
-    }
+    GitPHP::log_common($id, $level, $data);
 }
 
 function get_logs($count, $level = 0)
