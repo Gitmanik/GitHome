@@ -1,0 +1,10 @@
+.chart {
+	height:500px;
+	margin: auto;
+	margin-top:8em;
+	width: 100%;
+}
+
+.device:has(.chart) {
+    grid-column: 1 / -1;
+}

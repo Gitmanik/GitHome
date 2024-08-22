@@ -7,11 +7,13 @@
 	<link rel="stylesheet" href="/main.css">
 	<link rel="icon" type="image/png" href="/favicon.png">
 	
-	<link rel="stylesheet" href="<?php GitPHP::static("index.css") ?>">
-	<script src="<?php GitPHP::static("Chart.min.js") ?>"></script>
 	<script src="<?php GitPHP::static("index.js") ?>"></script>
-	<link rel="stylesheet" href="<?php GitPHP::static("blind.css") ?>">
-	<link rel="stylesheet" href="<?php GitPHP::static("toggle.css") ?>">
+	<link rel="stylesheet" href="<?php GitPHP::static("index.css") ?>">
+
+	<?php foreach (glob("../Handlers/CSS/*.css") as $css): ?>
+		<link rel="stylesheet" href="<?php GitPHP::static($css) ?>">
+	<?php endforeach;?>
+	
 </head>
 <body>
 	<p class="header"><a href="/config/">GitHome</a></p>
@@ -26,9 +28,7 @@
 	<?php endforeach;?>
 
 	</ul>
-	<div class="chart">
-        <canvas id="chart"></canvas>
-	</div>
+
 </body>
 
 </html>

@@ -1,0 +1,9 @@
+.customcode {
+	text-align: center;
+	color: white;
+	font-size: 150%;
+	display: flex;
+	align-items: center; 
+	justify-content: center;
+	height:100px;
+}
