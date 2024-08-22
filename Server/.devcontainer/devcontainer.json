@@ -2,7 +2,10 @@
 	"name": "Local Dockerfile",
 	"build": {
 		"context": "..",
-		"dockerfile": "../Dockerfile"
+		"dockerfile": "../Dockerfile",
+		"args": {
+            "network": "host"
+        }
 	},
 	"workspaceMount": "source=${localWorkspaceFolder},target=/var/www/html,type=bind",
 	"workspaceFolder": "/var/www/html",
