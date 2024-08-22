@@ -30,7 +30,6 @@ class GitHome implements GitPHPAction
             if (is_subclass_of($class, 'GitHomeDevice'))
                 array_push(GitHome::$handlers, $class);
 
-        GitPHP::register_action("cron", $this);
         GitPHP::register_action("debug", $this);
         GitPHP::register_action("device", $this);
     }
@@ -39,9 +38,6 @@ class GitHome implements GitPHPAction
     {
         switch ($elements[0])
         {
-            case "cron":
-                $this->handleCron($elements);
-                break;
             case "debug":
                 $this->handleDebug($elements);
                 break;
@@ -84,12 +80,6 @@ class GitHome implements GitPHPAction
 
         GitHome::die("handleDebug: Invalid subaction specified!");
     }
-
-    private function handleCron($elements)
-    {
-        
-    }
-
     public static function getDevices($handler_filter = "%")
     {
         $out = array();
