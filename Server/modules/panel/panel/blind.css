@@ -1,0 +1,39 @@
+.blind_name {
+	display: flex;
+	align-items: center; /* Vertical center alignment */
+	justify-content: center; /* Horizontal center alignment */
+	text-align:center;
+	color: white;
+	height: 25%;
+	width: 100%;
+	font-size:100%;
+}
+
+.blind_currentState {
+	background-color: #00000060;
+}
+
+.blind_state {
+	background-color: #00000000;
+}
+
+.blind_buttons {
+	height:75%;
+	background-color: #00000020;
+}
+
+.blind_buttons button {
+	overflow: hidden;
+	height:33.3%;
+	width:100%;
+	border: 0;
+	font-size: xx-large;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.blind_container {
+	height:200px;
+	width:100%;
+}

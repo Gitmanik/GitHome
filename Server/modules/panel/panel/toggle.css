@@ -1,0 +1,18 @@
+.toggle_true {
+	background-color: #ffffff20;
+}
+.toggle_false {
+	background-color: #00000040;
+}
+.toggle_momentary {
+	background-color: #00000020;
+}
+
+.toggle {
+	height:100%;
+	width:100%;
+	border: 0;
+	font-family: 'ABeeZee';
+	color: white;
+	font-size: 200%;
+}

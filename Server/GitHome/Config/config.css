@@ -1,0 +1,126 @@
+html,body {
+	color: white;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.list {
+	width: 80%;
+	margin: auto;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+
+.summarytable {
+	width: 80%;
+	margin: auto;
+	height: 500px;
+}
+
+.collapsible {
+	background-color: #00000020;
+	color: white;
+	cursor: pointer;
+	padding: 18px;
+	width: 100%;
+	border: none;
+	text-align: left;
+	outline: none;
+	font-size: 15px;
+}
+  
+.active, .collapsible:hover {
+	background-color: #00000070;
+}
+
+.content {
+	padding: 18px;
+	display: none;
+	overflow: hidden;
+	background-color: #00000070;
+}
+
+.devicetextareas textarea {
+	height:300px;
+	width: 100%;
+	background-color: #2d2d2d;
+	border: 0;
+	font-size: 13pt;
+	color: #ccc;
+}
+
+.codeeditor {
+	display: grid;
+	width: 100%;
+	grid-template-columns: 1fr;
+}
+
+
+.summarytable td {
+	padding:0;
+}
+
+.summarytable h2 {
+	text-align: center;
+}
+
+.logs {
+	width:70%;
+}
+
+.firmware {
+	width:30%;
+}
+
+.summarytable p {
+	margin:0;
+}
+
+.configbox {
+	background-color: #00000020;
+	height: 400px;
+	padding:10px;
+	width:100%;
+}
+
+.logcontainer {
+	display: block;
+	float: left;
+	overflow-y: scroll;
+	overflow-x: scroll;
+	word-wrap: break-word;
+}
+
+
+.firmwarecontainer table {
+	margin-top: 2em;
+	width:50%;
+	margin:auto;
+}
+
+.firmwarecontainer table td {
+	text-align: center;
+}
+.firmwarecontainer form  {
+	margin-top: 2em
+}
+
+.form_element {
+	display: inline-block;
+	width:100%;
+	margin-top: 5px;
+}
+
+.form_element textarea,input[type="text"],input[type="file"],select {
+	float:right;
+	width:65%;
+}
+
+.form_element label {
+	width:35%;
+	top:50%;
+	bottom: 50%;
+	height:100%;
+}

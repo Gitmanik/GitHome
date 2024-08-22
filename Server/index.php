@@ -1,17 +1,4 @@
 <?php
-require_once "GitPHP/GitPHP.php";
-
-$all_renderers_files = glob("renderers/*.php");
-foreach ($all_renderers_files as $renderer)
-{
-    require $renderer;
-}
-
-$all_devices_types = glob("devices/*.php");
-foreach ($all_devices_types as $device_type)
-{
-    require $device_type;
-}
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 1);
 ini_set("log_errors", 1);
@@ -19,24 +6,19 @@ ini_set('error_log', '/proc/1/fd/1');
 error_reporting(E_ALL);
 date_default_timezone_set('Europe/Warsaw');
 
-$path = parse_url($_SERVER['REQUEST_URI'])['path'];
-$path = ltrim($path, '/');
+setcookie("autologin", "saDdEbt5ocvEh7aO3E5wSSbW4u3", time() + (10 * 365 * 24 * 60 * 60));
 
-$elements = explode('/', $path);
+require_once "GitPHP/GitPHP.php";
+require_once "GitHome/GitHome.php";
 
-if ($elements[0] == "")
+try
 {
-    GitPHP::get_action("default")->render($elements);
-    exit();
+    GitHome::index();
+}
+catch (Throwable $e)
+{
+    echo "<br><br>";
+    GitHome::die($e->getTraceAsString() . "\n" . $e->getMessage());
 }
 
-$action = GitPHP::get_action($elements[0]);
-if ($action != null)
-{
-    $action->render($elements);
-    exit();
-}
-// GitPHP::fatal()
-echo "NOT REGISTERED ACTION<br>";
-var_dump($elements);
 ?>
