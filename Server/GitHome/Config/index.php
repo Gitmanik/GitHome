@@ -15,7 +15,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 </head>
 
 <body>
-<p class="header"><a href="/">GitHome - Config</a></p>
+<p class="header"><a href="javascript:history.back()">GitHome - Config</a></p>
 
 <table class="summarytable border">
 	<tr>
