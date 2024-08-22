@@ -1,5 +1,5 @@
 <?
-class PanelRenderer implements GitPHPAction
+class GitHomePanel implements GitPHPAction
 {
     function __construct()
     {
@@ -9,11 +9,10 @@ class PanelRenderer implements GitPHPAction
 
     public function render($elements)
     {
-        chdir(__DIR__ . "/panel");
+        chdir (__DIR__ . "/../Panel");
         require "index.php";
-        chdir("..");
     }
 
-    public function static($filename) {return "/modules/panel/panel/{$filename}";}
+    public function static($filename) {return "/GitHome/Panel/{$filename}";}
 }
 ?>
