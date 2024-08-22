@@ -11,6 +11,7 @@ setcookie("autologin", "saDdEbt5ocvEh7aO3E5wSSbW4u3", time() + (10 * 365 * 24 * 
 require_once "GitPHP/GitPHP.php";
 require_once "GitHome/GitHome.php";
 
+GitPHP::$SQLITE_DB_PATH = "/var/www/html/data/SmartHome.db";
 try
 {
     GitHome::index();

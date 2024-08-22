@@ -1,7 +1,4 @@
 <?
-
-GitPHP::$SQLITE_DB_PATH = "/var/www/html/data/SmartHome.db";
-
 class GitPHP 
 {
     public static string $SQLITE_DB_PATH = "";
@@ -12,7 +9,7 @@ class GitPHP
 
     public static function index()
     {
-        foreach (glob("modules/*/module.php") as $module)
+        foreach (glob("Modules/*/module.php") as $module)
         {
             require_once $module;
         }
