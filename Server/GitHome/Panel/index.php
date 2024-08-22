@@ -8,7 +8,7 @@
 	<link rel="icon" type="image/png" href="/favicon.png">
 	
 	<script src="<?php GitPHP::static("index.js") ?>"></script>
-	<link rel="stylesheet" href="<?php GitPHP::static("index.css") ?>">
+	<link rel="stylesheet" href="<?php GitPHP::static("panel.css") ?>">
 
 	<?php foreach (glob("../Handlers/CSS/*.css") as $css): ?>
 		<link rel="stylesheet" href="<?php GitPHP::static($css) ?>">
