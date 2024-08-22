@@ -6,17 +6,31 @@ html,body {
 	text-align: center;
 }
 
+.form_element {
+	display: inline-block;
+	width:100%;
+	margin-top: 5px;
+}
+
+.form_element textarea,input[type="text"],input[type="file"],select {
+	float:right;
+	width:65%;
+}
+
+.form_element label {
+	width:35%;
+	top:50%;
+	bottom: 50%;
+	height:100%;
+}
+
+/* DEVICES LIST */
+
 .list {
 	width: 80%;
 	margin: auto;
 	margin-top: 2em;
 	margin-bottom: 2em;
-}
-
-.summarytable {
-	width: 80%;
-	margin: auto;
-	height: 500px;
 }
 
 .collapsible {
@@ -42,21 +56,31 @@ html,body {
 	background-color: #00000070;
 }
 
-.devicetextareas textarea {
-	height:300px;
-	width: 100%;
-	background-color: #2d2d2d;
-	border: 0;
-	font-size: 13pt;
-	color: #ccc;
+.device_buttons {
+	width:100%;
+}
+.device_buttons td {
+	width: 50%;
+}
+.device_buttons button,input[type=submit]{
+	width:100%;
 }
 
-.codeeditor {
-	display: grid;
-	width: 100%;
-	grid-template-columns: 1fr;
+/*  */
+
+.summarytable {
+	width: 80%;
+	margin: auto;
+	height: 500px;
 }
 
+.summarytable tbody,tr {
+	display: block;
+}
+
+.summarytable td {
+	box-sizing: border-box;
+}
 
 .summarytable td {
 	padding:0;
@@ -68,14 +92,11 @@ html,body {
 
 .logs {
 	width:70%;
+	overflow-wrap: anywhere;
 }
 
 .firmware {
 	width:30%;
-}
-
-.summarytable p {
-	margin:0;
 }
 
 .configbox {
@@ -88,39 +109,29 @@ html,body {
 .logcontainer {
 	display: block;
 	float: left;
-	overflow-y: scroll;
-	overflow-x: scroll;
-	word-wrap: break-word;
+	overflow-y: auto;
+	width: 100%;
+	height:100%;
 }
 
+.logcontainer p {
+	margin:0;
+}
 
-.firmwarecontainer table {
-	margin-top: 2em;
+.firmwaretable {
+	width:100%;
+	height:100%;
+}
+.firmwaretable tr {
+	height: 50%;
+}
+
+.currentfirmware {
 	width:50%;
 	margin:auto;
-}
-
-.firmwarecontainer table td {
 	text-align: center;
 }
-.firmwarecontainer form  {
-	margin-top: 2em
-}
 
-.form_element {
-	display: inline-block;
-	width:100%;
-	margin-top: 5px;
-}
-
-.form_element textarea,input[type="text"],input[type="file"],select {
-	float:right;
-	width:65%;
-}
-
-.form_element label {
-	width:35%;
-	top:50%;
-	bottom: 50%;
-	height:100%;
+.currentfirmware table td {
+	margin:0;
 }

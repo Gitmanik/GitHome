@@ -21,29 +21,39 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<tr>
 		<td class="logs">
 			<h2>Logs</h2>
-			<div class="configbox logcontainer">
-				<?php foreach (GitHome::getLogs(100) as $log): ?>
-				<p style="color:<?=$log['level'] == '0' ? "white" : ($log['level'] == '1' ? "yellow" : "#00ffff")?>"><i><?=$log['date']?></i>: <b><?=$log['device_id']?></b> - <?=$log['data']?></p>
-				<?php endforeach; ?>
+			<div class="configbox">
+				<div class="logcontainer">
+					<?php foreach (GitHome::getLogs(100) as $log): ?>
+					<p style="color:<?=$log['level'] == '0' ? "white" : ($log['level'] == '1' ? "yellow" : "#00ffff")?>"><i><?=$log['date']?></i>: <b><?=$log['device_id']?></b> - <?=$log['data']?></p>
+					<?php endforeach; ?>
+				</div>
 			</div>
 		</td>
-	
+
 		<td class="firmware">
 			<h2>Firmware</h2>
 			<div class="configbox firmwarecontainer">
+				<table class="firmwaretable">
+					<tr>
+						<td>
 				<p class="text-center"> <b> Current Firmware versions </b> </p>
-				<table>
+				<table class="currentfirmware">
 					<tr>
 						<th> Name </th>
 						<th> Version </th>
 					</tr>
 					<?php foreach ($versions as $ver): ?>
 						<tr>
-						<td> <p><?=$ver['name']?></p> </td>
-						<td> <p><?=$ver['version']?></p> </td>
+						<td> <?=$ver['name']?> </td>
+						<td> <?=$ver['version']?> </td>
 						</tr>
 					<?php endforeach;?>
 				</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
 				<form action="/config/uploadFirmware" method="post" enctype="multipart/form-data">
 					<p class="text-center"> <b> Upload new Firmware </b> </p>
 
@@ -76,6 +86,9 @@ $versions = GitHome::$firmware->listFirmware(true);
 						<input type="submit" value="Upload">
 					</div>
 				</form>
+						</td>
+					</tr>
+				</table>
 			</div>
 		</td>
 	</tr>
@@ -134,10 +147,17 @@ $versions = GitHome::$firmware->listFirmware(true);
 				
 				<br>
 				<br>
-
-				<input type="submit" value="Save">
+				<table class="device_buttons">
+					<tr>
+						<td>
+							<input type="submit" value="Save">
+						</td>
+						<td>
+							<button onclick='deleteDevice("<?= $dev->id ?>");'> Remove device </button>
+						</td>
+					</tr>
+				</table>
 			</form>
-			<button onclick='deleteDevice("<?= $dev->id ?>");'> Remove device </button>
 
 		</div>
 	
