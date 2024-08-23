@@ -81,6 +81,33 @@ class GitHomeConfig implements GitPHPAction
         $dev->save();
     }
 
+    private function isCustomCodeEditor($val)
+    {
+        foreach ($val["attributes"] as $attrib)
+        {
+            if ($attrib->getName() == "CustomEdit")
+                return $attrib->newInstance()->type;
+        }
+
+        return false;
+    }
+
     public function static($filename) {return "/GitHome/Config/{$filename}";}
 }
+
+enum CustomEditorType
+{
+    case CODE_EDITOR;
+}
+
+#[Attribute]
+class CustomEdit
+{
+    public readonly CustomEditorType $type;
+    public function __construct(CustomEditorType $type)
+    {
+        $this->type = $type;
+    }
+}
+
 ?>

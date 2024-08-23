@@ -2,6 +2,7 @@
 
 class CustomCodeDevice extends GitHomeDevice
 {
+    #[CustomEdit(CustomEditorType::CODE_EDITOR)]
     public ?string $customCode = null;
 
     public function endpoint($elements)

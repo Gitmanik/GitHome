@@ -132,6 +132,27 @@ class GitHomeDevice
         }
         return $data;
     }
+       
+    public function exportDataWithAttrib()
+    {
+        $reflect = new ReflectionClass($this);
+        $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
+        $data = array();
+        foreach ($props as $prop)
+        {
+            if ($prop->class == "GitHomeDevice")
+                continue;
+            if ($prop->isInitialized($this))
+                $data[$prop->name] = array
+                (
+                    "value" => $prop->getValue($this),
+                    "attributes" => $prop->getAttributes()
+                );
+            else
+                $data[$prop->name] = "";
+        }
+        return $data;
+    }
 
     public function logNormal($text) {GitHome::logNormal($text, $this);}
     public function logWarn($text) {GitHome::logWarn($text, $this);}

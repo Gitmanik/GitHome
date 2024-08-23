@@ -12,6 +12,22 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<link rel="stylesheet" href="/main.css">
 	<link rel="stylesheet" href="<?GitPHP::static("config.css")?>">
 	<script src="<?GitPHP::static("config.js")?>"></script>
+
+	<script type="module">
+		(async ({chrome, netscape}) => {
+
+		// add Safari polyfill if needed
+		if (!chrome && !netscape)
+			await import('https://unpkg.com/@ungap/custom-elements');
+
+		const {default: HighlightedCode} =
+			await import('https://unpkg.com/highlighted-code');
+
+		// bootstrap a theme through one of these names
+		// https://github.com/highlightjs/highlight.js/tree/main/src/styles
+		HighlightedCode.useTheme('github-dark');
+		})(self);
+	</script>
 </head>
 
 <body>
@@ -138,10 +154,18 @@ $versions = GitHome::$firmware->listFirmware(true);
 					<input autocomplete="off" type="text" name="version" id="version" value="<?=$dev->version?>">
 				</div>
 
-				<?php foreach ($dev->exportData() as $prop => $val): ?>
+				<?php foreach ($dev->exportDataWithAttrib() as $prop => $val): ?>
 					<div class="form_element">
 					<label for="<?=$prop?>"> <?=$prop ?>: </label>
-					<textarea autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val?></textarea>
+					<?php switch($this->isCustomCodeEditor($val)):
+					case CustomEditorType::CODE_EDITOR: ?>
+						<textarea spellcheck="false" is="highlighted-code" language="php" cols="80" rows="12" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
+						<?php break; ?>
+						<?php case false: ?>
+							<textarea spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
+						<?php break; ?>
+					<? endswitch; ?>
+
 					</div>
 				<?php endforeach; ?>
 				
