@@ -96,17 +96,39 @@ class GitHome implements GitPHPAction
         return $out;
     }
 
-    public static function logNormal(string $text, GitHomeDevice $dev = null) { GitPHP::logNormal($text, is_null($dev) ? "GitHome" : $dev->id);}
-    public static function logError($text, GitHomeDevice $dev = null) { GitPHP::logError($text, is_null($dev) ? "GitHome" : $dev->id);}
-    public static function logWarn($text, GitHomeDevice $dev = null) { GitPHP::logWarn($text, is_null($dev) ? "GitHome" : $dev->id);}
-    public static function getLogs($maxCount, $minLevel = PHP_INT_MAX) {return GitPHP::getLogs($maxCount, $minLevel);}
+    public static function logNormal(string $text, GitHomeDevice $dev = null) { GitHome::logCommon($text, is_null($dev) ? "GitHome" : $dev->id, 0);}
+    public static function logWarn($text, GitHomeDevice $dev = null) { GitHome::logCommon($text, is_null($dev) ? "GitHome" : $dev->id, 1);}
+    public static function logError($text, GitHomeDevice $dev = null) { GitHome::logCommon($text, is_null($dev) ? "GitHome" : $dev->id, 2);}
+
+    public static function logCommon($data, $id, $level)
+    {
+        if($stmt = GitPHP::db()->prepare("INSERT INTO logs (device_id, data, level, date) VALUES (:id, :data, :level, :time)")){
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':data', $data);
+            $stmt->bindParam(':level', $level);
+            $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindParam(':time', $ts);
+            $stmt->execute();
+        }
+    }
+
+    public static function getLogs($maxCount, $minLevel = PHP_INT_MAX)
+    {
+        if($stmt = GitPHP::db()->prepare("SELECT * FROM logs WHERE level <= :level ORDER BY id DESC LIMIT :count")){
+            $stmt->bindParam(":level", $minLevel);
+            $stmt->bindParam(":count", $maxCount);
+            if($stmt->execute())
+            {
+                return $stmt->fetchAll();
+            }
+        }
+    }
 
     public static function die(string $reason, bool $silent = false)
     {
         $text = "GitHome died. {$reason}";
         if (!$silent)
             echo $text;
-        GitPHP::logError($text);
+        GitHome::logError($text);
         error_log($text);
         die;
     }

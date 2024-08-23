@@ -91,32 +91,6 @@ class GitPHP
 
 
     public static function CURRENT_TIMESTAMP() { return date("Y-m-d H:i:s");}
-    public static function logNormal($text, $id = null) { GitPHP::log_common($id, 0, $text); }
-    public static function logError($text, $id = null) { GitPHP::log_common($id, 2, $text); }
-    public static function logWarn($text, $id = null) { GitPHP::log_common($id, 1, $text); }
-
-    public static function log_common($id, $level, $data)
-    {
-        if($stmt = GitPHP::db()->prepare("INSERT INTO logs (device_id, data, level, date) VALUES (:id, :data, :level, :time)")){
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':data', $data);
-            $stmt->bindParam(':level', $level);
-            $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindParam(':time', $ts);
-            $stmt->execute();
-        }
-    }
-
-    public static function getLogs($maxCount, $minLevel = PHP_INT_MAX)
-    {
-        if($stmt = GitPHP::db()->prepare("SELECT * FROM logs WHERE level <= :level ORDER BY id DESC LIMIT :count")){
-            $stmt->bindParam(":level", $minLevel);
-            $stmt->bindParam(":count", $maxCount);
-            if($stmt->execute())
-            {
-                return $stmt->fetchAll();
-            }
-        }
-    }
 }
 
 interface GitPHPAction

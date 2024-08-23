@@ -34,7 +34,7 @@ class CustomCodeDevice extends GitHomeDevice
         }
         catch (Throwable $e)
         {
-            GitHome::logError("Custom Code threw: " . $e->getMessage(), $this);
+            $this->logError("Custom Code threw: " . $e->getMessage());
         }
     }
 }

@@ -45,7 +45,7 @@ class GitHomeLegacy implements GitPHPAction
         if (is_null($dev))
             GitHome::die("GitHomeLegacy handleUpdate: Device not found!");
 
-        GitHome::logNormal("Updating firmware", $dev);
+        $dev->logNormal("Updating firmware");
 
         $content = GitHome::$firmware->getNewestFirmware($dev->firmware);
         if ($content == null)

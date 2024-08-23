@@ -44,7 +44,7 @@ class GitHomeTemperature implements GitPHPAction
 
     private function getTemperature($sensor, $since)
     {
-        if($stmt = GitPHP::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor"))
+        if($stmt = GitHome::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor"))
         {
             $stmt->bindParam(':since', $since);
             $stmt->bindParam(':sensor', $sensor);
@@ -69,7 +69,7 @@ class GitHomeTemperature implements GitPHPAction
 
     private function addTemperature($sensor, $value)
     {
-        if ($stmt = GitPHP::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (CURRENT_TIMESTAMP, :sensor, :value)"))
+        if ($stmt = GitHome::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (CURRENT_TIMESTAMP, :sensor, :value)"))
         {
             $stmt->bindValue(':sensor', $sensor);
             $stmt->bindValue(':value', $value);

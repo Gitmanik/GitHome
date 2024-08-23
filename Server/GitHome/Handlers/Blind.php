@@ -13,7 +13,7 @@ class Blind extends GitHomeDevice
     {
         if (!isset($elements[2]))
         {
-            GitHome::logError("Subaction not specified!", $this);
+            $this->logError("Subaction not specified!");
             die;
         }
         switch (strtoupper($elements[2]))
@@ -28,7 +28,7 @@ class Blind extends GitHomeDevice
                 $this->click(-1);
                 break;
             default:
-                GitHome::logError("Wrong direction! {$elements[2]}", $this);
+                $this->logError("Wrong direction! {$elements[2]}");
                 break;
         }
         $this->save();
@@ -39,19 +39,19 @@ class Blind extends GitHomeDevice
         switch ($direction)
         {
             case 1:
-                GitHome::logNormal("Clicked UP", $this);
+                $this->logNormal("Clicked UP");
                 $code = $this->codeUp;
                 break;
             case 0:
-                GitHome::logNormal("Clicked STOP", $this);
+                $this->logNormal("Clicked STOP");
                 $code = $this->codeStop;
                 break;
             case -1:
-                GitHome::logNormal("Clicked DOWN", $this);
+                $this->logNormal("Clicked DOWN");
                 $code = $this->codeDown;
                 break;
             default:
-                GitHome::logError("Wrong direction! {$direction}", $this);
+                $this->logError("Wrong direction! {$direction}");
                 return false;
         }
        

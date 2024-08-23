@@ -101,7 +101,6 @@ class GitHomeDevice
         return;
     }
 
-
     public function loadData($data)
     {
         if (!isset($data))
@@ -134,6 +133,10 @@ class GitHomeDevice
         return $data;
     }
 
+    public function logNormal($text) {GitHome::logNormal($text, $this);}
+    public function logWarn($text) {GitHome::logWarn($text, $this);}
+    public function logError($text) {GitHome::logError($text, $this);}
+
     public function endpoint($elements) { /* VIRTUAL */ }
     public function legacy($elements) { /* VIRTUAL */ }
     public function render() { /* VIRTUAL */ }
@@ -144,13 +147,13 @@ class BlankDevice extends GitHomeDevice
     public function endpoint($elements)
     {
         $imploded = implode(",", $elements);
-        GitHome::logWarn("Endpoint reached on Blank: {$imploded}", $this);
+        $this->logWarn("Endpoint reached on Blank: {$imploded}");
     }
 
     public function legacy($elements)
     {
         $imploded = implode(",", $elements);
-        GitHome::logWarn("Legacy reached on Blank: {$imploded}", $this);
+        $this->logWarn("Legacy reached on Blank: {$imploded}");
     }
 }
 

@@ -8,7 +8,7 @@ class RTSPDevice extends GitHomeDevice
     {
         if (!isset($elements[2]))
         {
-            GitHome::logError("Subaction not specified!", $this);
+            $this->logError("Subaction not specified!");
             die;
         }
         switch ($elements[2])

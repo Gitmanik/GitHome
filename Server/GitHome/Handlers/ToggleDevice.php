@@ -9,7 +9,7 @@ class ToggleDevice extends GitHomeDevice
     {
         if (!isset($elements[2]))
         {
-            GitHome::logError("Subaction not specified!", $this);
+            $this->logError("Subaction not specified!");
             die;
         }
         switch (strtoupper($elements[2]))
@@ -28,7 +28,7 @@ class ToggleDevice extends GitHomeDevice
                 $this->toggle();
                 break;
             default:
-                GitHome::logError("Wrong subaction! {$elements[2]}", $this);
+                $this->logError("Wrong subaction! {$elements[2]}");
                 break;
         }
     }
@@ -54,17 +54,20 @@ class ToggleDevice extends GitHomeDevice
     public function toggleON()
     {
         $this->state = true;
+        $this->logNormal("ON");
         $this->save();
     }
 
     public function toggleOFF()
     {
         $this->state = false;
+        $this->logNormal("OFF");
         $this->save();
     }
     public function toggle()
     {
         $this->state = !$this->state;
+        $this->logNormal($this->state ? "ON" : "OFF");
         $this->save();
     }
 }
