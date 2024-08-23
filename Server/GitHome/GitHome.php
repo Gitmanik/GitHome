@@ -22,7 +22,6 @@ class GitHome implements GitPHPAction
 
     function __construct()
     {
-        new GitHomeConfig();
         GitHome::$firmware = new GitHomeFirmwareServer();
         GitHome::$handlers = array();
 
