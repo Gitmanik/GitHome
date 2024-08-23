@@ -13,6 +13,20 @@ class GitHomePanel implements GitPHPAction
         require "index.php";
     }
 
+    public function filterDevices()
+    {
+        if (!isset($_GET["filter"]))
+            return GitHome::getDevices();
+
+        $idsToShow = explode(",", $_GET["filter"]);
+        $arr = array();
+        foreach ($idsToShow as $id)
+        {
+            array_push($arr, GitHomeDevice::createFromID($id));
+        }
+        return $arr;
+    }
+
     public function static($filename) {return "/GitHome/Panel/{$filename}";}
 }
 ?>

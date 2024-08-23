@@ -19,7 +19,7 @@
 	<p class="header"><a href="/config/">GitHome</a></p>
 	<ul class="devices"> 
 	
-	<?php foreach ($this->getDevices() as $dev): ?>
+	<?php foreach ($this->filterDevices() as $dev): ?>
 
 	<li class="device border">
 		<?=$dev->render() ?>
