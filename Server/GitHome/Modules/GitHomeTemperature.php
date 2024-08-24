@@ -44,50 +44,21 @@ class GitHomeTemperature implements GitPHPAction
 
     public static function getTemperature($sensor, $since)
     {
-        if($stmt = GitHome::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor"))
-        {
-            $stmt->bindParam(':since', $since);
-            $stmt->bindParam(':sensor', $sensor);
-            if($stmt->execute())
-            {
-                if($row = $stmt->fetchAll(PDO::FETCH_ASSOC))
-                {
-                    return $row;
-                }
-                else
-                {
-                    GitHome::logError("Temperature: Get temperature for {$sensor} unsuccesful! (1)");
-                }
-            }
-            else
-            {
-                GitHome::logError("Temperature: Get temperature for {$sensor} unsuccesful! (1)");
-            }
-        }
-        return null;
+        $stmt = GitHome::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor");
+        $stmt->bindParam(':since', $since);
+        $stmt->bindParam(':sensor', $sensor);
+        $stmt->execute();
+        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $row;
     }
 
     public static function addTemperature($sensor, $value)
     {
-        if ($stmt = GitHome::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (:ts, :sensor, :value)"))
-        {
-            $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindValue(":ts", $ts);
-            $stmt->bindValue(':sensor', $sensor);
-            $stmt->bindValue(':value', $value);
-            if ($stmt->execute())
-            {
-                return true;
-            }
-            else
-            {
-                GitHome::logError("Temperature: Add temperature for {$sensor} unsuccesful! (2)");
-            }
-        }
-        else
-        {
-            GitHome::logError("Temperature: Add temperature for {$sensor} unsuccesful! (1)");
-        }
-        return false;
+        $stmt = GitHome::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (:ts, :sensor, :value)");
+        $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindValue(":ts", $ts);
+        $stmt->bindValue(':sensor', $sensor);
+        $stmt->bindValue(':value', $value);
+        $stmt->execute();
     }
 }
 ?>
