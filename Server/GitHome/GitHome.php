@@ -70,6 +70,16 @@ class GitHome implements GitPHPAction
             die;
         }
         
+        if ($elements[1] == "devices")
+        {
+            $f = "%";
+            if (isset($elements[2]))
+                $f = $elements[2];
+            
+            var_dump(GitHome::getDevices($f));
+            die;
+        }
+        
         if ($elements[1] == "render")
         {
             $dev = GitHomeDevice::createFromID($elements[2]);
