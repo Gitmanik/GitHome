@@ -72,6 +72,7 @@ class GitPHP
         {
             GitPHP::$pdo = new PDO("sqlite:" . GitPHP::$SQLITE_DB_PATH);
             GitPHP::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            GitPHP::$pdo->setAttribute(PDO::ATTR_TIMEOUT, 1);
             GitPHP::$pdo->exec("PRAGMA journal_mode = WAL");
         }
         catch(PDOException $e)
