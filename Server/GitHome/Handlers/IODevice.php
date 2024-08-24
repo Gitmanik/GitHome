@@ -1,6 +1,6 @@
 <?php
 
-class IODevice extends GitHomeDevice
+class IODevice extends CustomCodeDevice
 {
     public ?string $in = null;
     public ?string $out = null;
@@ -11,14 +11,17 @@ class IODevice extends GitHomeDevice
     }
     public function legacy($elements)
     {
+        if (isset($_GET["data"]))
+        {
+            $this->in = $_GET["data"];
+        }
+
+        $this->runCustomCode($elements);
+
         if (!is_null($this->out))
         {
             echo $this->out;
             $this->out = null;
-        }
-        if (isset($_GET["data"]))
-        {
-            $this->in = $_GET["data"];
         }
     }
 }
