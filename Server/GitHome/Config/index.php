@@ -9,8 +9,8 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<meta charset="UTF-8">
 	<title>GitHome - Config</title>
 	<link rel="icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" href="/main.css">
-	<script src="/GitHome.js"></script>
+	<link rel="stylesheet" href="/main.css?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/main.css") ?>">
+	<script src="/GitHome.js?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/GitHome.js") ?>""></script>
 	<link rel="stylesheet" href="<?GitPHP::static("config.css")?>">
 	<script src="<?GitPHP::static("config.js")?>"></script>
 

@@ -4,9 +4,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>GitHome</title>
-	<link rel="stylesheet" href="/main.css">
 	<link rel="icon" type="image/png" href="/favicon.png">
-	<script src="/GitHome.js"></script>
+	<link rel="stylesheet" href="/main.css?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/main.css") ?>">
+	<script src="/GitHome.js?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/GitHome.js") ?>""></script>
 	
 	<link rel="stylesheet" href="<?php GitPHP::static("panel.css") ?>">
 
