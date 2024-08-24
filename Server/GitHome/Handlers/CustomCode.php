@@ -20,7 +20,7 @@ class CustomCodeDevice extends GitHomeDevice
         $this->runCustomCode($elements);
     }
 
-    private function runCustomCode($elements)
+    public function runCustomCode($elements)
     {
         if (!isset($this->customCode) || empty($this->customCode))
             return;
