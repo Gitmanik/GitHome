@@ -24,9 +24,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 		const {default: HighlightedCode} =
 			await import('https://unpkg.com/highlighted-code');
 
-		// bootstrap a theme through one of these names
-		// https://github.com/highlightjs/highlight.js/tree/main/src/styles
-		HighlightedCode.useTheme('github-dark');
+		HighlightedCode.useTheme('tokyo-night-dark');
 		})(self);
 	</script>
 </head>
