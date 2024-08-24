@@ -137,8 +137,8 @@ class GitHome implements GitPHPAction
         $text = "GitHome died. {$reason}";
         if (!$silent)
             echo $text;
-        GitHome::logError($text);
         error_log($text);
+        GitHome::logError($text);
         die;
     }
 
