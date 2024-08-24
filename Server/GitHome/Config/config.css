@@ -12,7 +12,7 @@ html,body {
 	margin-top: 5px;
 }
 
-.form_element textarea,input[type="text"],input[type="file"],select {
+.form_element :is(textarea,input[type="text"],input[type="file"],select) {
 	float:right;
 	width:80%;
 }
@@ -59,7 +59,7 @@ html,body {
 .device_buttons td {
 	width: 50%;
 }
-.device_buttons button,input[type=submit]{
+.device_buttons :is(button,input[type=submit]) {
 	width:100%;
 }
 
@@ -115,7 +115,7 @@ html,body {
 	margin:0;
 }
 
-.firmware .form_element textarea,input[type="text"],input[type="file"],select {
+.firmware .form_element :is(textarea,input[type="text"],input[type="file"],select) {
 	width:60%;
 }
 
@@ -139,4 +139,9 @@ html,body {
 
 .currentfirmware table td {
 	margin:0;
+}
+
+textarea[is='highlighted-code'] {
+	width:100%;
+	height:400px;
 }

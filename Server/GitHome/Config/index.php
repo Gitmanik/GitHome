@@ -31,7 +31,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 </head>
 
 <body>
-<p class="header"><a href="javascript:history.back()">GitHome - Config</a></p>
+<p class="header"><a>Configuration Panel</a></p>
 
 <table class="summarytable border">
 	<tr>
@@ -212,7 +212,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 					<input autocomplete="off" type=text name="name" value="<?=$task['name']?>"></input>
 				</div>
 
-				<textarea style="width:100%; height:400px;" spellcheck="false" is="highlighted-code" language="php" autocomplete="off" name="code" ><?=$task['code']?></textarea>
+				<textarea spellcheck="false" is="highlighted-code" language="php" autocomplete="off" name="code" ><?=$task['code']?></textarea>
 
 				<br>
 				<br>
