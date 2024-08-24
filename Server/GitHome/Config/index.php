@@ -192,5 +192,51 @@ $versions = GitHome::$firmware->listFirmware(true);
 		<input class="collapsible" type="submit" value="Create new Device" />
 	</form>
 </div>
+
+<div class="list border">
+
+	<h2 class=text-center>Tasks</h2>
+
+	<?php foreach (GitHomeCron::getTasks() as $task): ?>
+
+		<button class="collapsible"> <b><?= $task['name'] ?> </b> </button>
+
+		<div class="content">
+
+			<form action="/config/saveTask" method="post" enctype="multipart/form-data">
+
+				<input autocomplete="off" type="hidden" name="id" value="<?= $task['id'] ?>"></input>
+
+				<div class="form_element">
+					<label> Name: </label>
+					<input autocomplete="off" type=text name="name" value="<?=$task['name']?>"></input>
+				</div>
+
+				<textarea style="width:100%; height:400px;" spellcheck="false" is="highlighted-code" language="php" autocomplete="off" name="code" ><?=$task['code']?></textarea>
+
+				<br>
+				<br>
+				<table class="device_buttons">
+					<tr>
+						<td>
+							<input type="submit" value="Save Task">
+						</td>
+						<td>
+							<button onclick='deleteTask("<?= $dev->id ?>");'> Delete Task </button>
+						</td>
+					</tr>
+				</table>
+			</form>
+
+		</div>
+	
+	<?php endforeach; ?>
+	<br>
+	<br>
+	<form action="/config/newTask">
+		<input class="collapsible" type="submit" value="Create new Task" />
+	</form>
+</div>
+
 </body>
 </html>

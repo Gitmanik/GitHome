@@ -15,6 +15,7 @@ class GitHomeConfig implements GitPHPAction
             require "index.php";
             die;
         }
+
         if ($elements[1] == "saveDevice")
         {
             $this->handleSave($elements);
@@ -39,6 +40,26 @@ class GitHomeConfig implements GitPHPAction
         {
             $this->handleUploadFirmware($elements);
             header("Location: /config");
+            die;
+        }
+        
+        if ($elements[1] == "newTask")
+        {
+            GitHomeCron::newTask();
+            header("Location: /config");
+            die;
+        }
+        if ($elements[1] == "saveTask")
+        {
+            GitHomeCron::saveTask($_POST["id"], $_POST["name"], $_POST["code"]);
+            header("Location: /config");
+            die;
+        }
+        if ($elements[1] == "deleteTask")
+        {
+            GitHomeCron::deleteTask($_POST["id"]);
+            header("Location: /config");
+
             die;
         }
     
