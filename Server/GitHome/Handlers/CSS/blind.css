@@ -37,11 +37,5 @@
 }
 
 .device:has(.blind_container) {
-	height:150px;
-}
-
-@media screen and (orientation:portrait) {
-	.device:has(.blind_container) {
-		height:300px;
-	}
+	grid-row: span 3;
 }

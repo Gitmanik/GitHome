@@ -27,7 +27,7 @@ class RTSPDevice extends GitHomeDevice
 
     public function render()
     {
-        echo "<button class='toggle toggle_momentary' style='font-weight: normal;height:100%;' onclick='location.href=`/device/{$this->id}/view`;'>{$this->name}</button>";
+        echo "<button class='toggle toggle_momentary' onclick='location.href=`/device/{$this->id}/view`;'>{$this->name}</button>";
     }
 
     private function renderView()

@@ -1,8 +1,9 @@
-.chart {
-	height: 400px;
+.device:has(.chart) {
 	width: 100%;
+    grid-column: 1 / -1;
+	grid-row: span 4;
 }
 
-.device:has(.chart) {
-    grid-column: 1 / -1;
+.chart {
+	height:100%;
 }

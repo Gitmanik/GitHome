@@ -8,8 +8,13 @@
 	background-color: #00000020;
 }
 
+.device:has(.toggle)
+{
+	grid-row: span 1;
+}
+
 .toggle {
-	height:100px;
+	height:100%;
 	width:100%;
 	border: 0;
 	font-family: 'ABeeZee';

@@ -21,9 +21,7 @@
 	
 	<?php foreach ($this->filterDevices() as $dev): ?>
 
-	<li class="device border">
-		<?=$dev->render() ?>
-	</li>
+	<li class="device border"><?=$dev->render()?></li>
 
 	<?php endforeach;?>
 

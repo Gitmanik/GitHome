@@ -4,15 +4,19 @@
 	display: inline-block;
 	list-style: none;
 	display: grid;
-	grid-template-columns: repeat(2,48%);
+	grid-template-columns: repeat(3,30%);
+    grid-auto-rows: 100px;
 	grid-gap: 1%;
 	margin: auto;
-	grid-auto-flow: dense;
 }
 
-.devices li {
+.device {
 	overflow:hidden;
-	min-height:100px;
+	grid-row: span 1;
+}
+
+.device:empty {
+	display: none;
 }
 
 @media (min-width: 1200px), (orientation: landscape) {
