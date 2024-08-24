@@ -16,50 +16,40 @@ class GitHomeConfig implements GitPHPAction
             die;
         }
 
-        if ($elements[1] == "saveDevice")
-        {
-            $this->handleSave($elements);
-            header("Location: /config");
-            die;
-        }
-        if ($elements[1] == "newDevice")
-        {
-            GitHomeDevice::createNew("NEW_" . time());
-            header("Location: /config");
-            die;
-        }
-
-        if ($elements[1] == "deleteDevice")
-        {
-            GitHomeDevice::deleteDevice($elements[2]);
-            header("Location: /config");
-            die;
-        }
-
         if ($elements[1] == "uploadFirmware")
         {
             $this->handleUploadFirmware($elements);
             header("Location: /config");
             die;
         }
-        
-        if ($elements[1] == "newTask")
-        {
-            GitHomeCron::newTask();
-            header("Location: /config");
-            die;
-        }
-        if ($elements[1] == "saveTask")
-        {
-            GitHomeCron::saveTask($_POST["id"], $_POST["name"], $_POST["code"]);
-            header("Location: /config");
-            die;
-        }
-        if ($elements[1] == "deleteTask")
-        {
-            GitHomeCron::deleteTask($_POST["id"]);
-            header("Location: /config");
 
+        // TODO: Validate incoming data
+        if ($elements[1] == "device")
+        {
+            if (isset($_POST["save"]))
+                $this->handleSave($elements);
+            else if (isset($_POST["delete"]))
+                GitHomeDevice::deleteDevice($_POST["id"]);
+            else if (isset($_POST["new"]))
+                GitHomeDevice::createNew("NEW_" . time());
+            else GitHome::die("GitHomeConfig device: No valid subaction.");
+
+            header("Location: /config");
+            die;
+        }
+
+        // TODO: Validate incoming data
+        if ($elements[1] == "task")
+        {
+            if (isset($_POST["save"]))
+                GitHomeCron::saveTask($_POST["id"], $_POST["name"], $_POST["code"]);
+            else if (isset($_POST["delete"]))
+                GitHomeCron::deleteTask($_POST['id']);
+            else if (isset($_POST["new"]))
+                GitHomeCron::newTask();
+            else GitHome::die("GitHomeConfig task: No valid subaction.");
+
+            header("Location: /config");
             die;
         }
     

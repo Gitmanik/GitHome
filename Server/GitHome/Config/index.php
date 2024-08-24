@@ -121,7 +121,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 		<div class="content">
 
-			<form action="/config/saveDevice" method="post" enctype="multipart/form-data">
+			<form action="/config/device" method="post" enctype="multipart/form-data">
 
 				<input autocomplete="off" type="hidden" name="id" value="<?= $dev->id ?>"></input>
 
@@ -175,10 +175,10 @@ $versions = GitHome::$firmware->listFirmware(true);
 				<table class="device_buttons">
 					<tr>
 						<td>
-							<input type="submit" value="Save">
+							<input type="submit" value="Save" name="save">
 						</td>
 						<td>
-							<button onclick='deleteDevice("<?= $dev->id ?>");'> Remove device </button>
+							<input type="submit" value="Delete Device" name="delete">
 						</td>
 					</tr>
 				</table>
@@ -189,8 +189,8 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<?php endforeach; ?>
 	<br>
 	<br>
-	<form action="/config/newDevice">
-		<input class="collapsible" type="submit" value="Create new Device" />
+	<form action="/config/device">
+		<input class="collapsible" type="submit" value="Create new Device" name="new"/>
 	</form>
 </div>
 
@@ -204,7 +204,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 		<div class="content">
 
-			<form action="/config/saveTask" method="post" enctype="multipart/form-data">
+			<form action="/config/task" method="post" enctype="multipart/form-data">
 
 				<input autocomplete="off" type="hidden" name="id" value="<?= $task['id'] ?>"></input>
 
@@ -220,10 +220,10 @@ $versions = GitHome::$firmware->listFirmware(true);
 				<table class="device_buttons">
 					<tr>
 						<td>
-							<input type="submit" value="Save Task">
-						</td>
+							<input type="submit" value="Save Task" name="save">
+							</td>
 						<td>
-							<button onclick='deleteTask("<?= $dev->id ?>");'> Delete Task </button>
+							<input type="submit" value="Delete Task" name="delete">
 						</td>
 					</tr>
 				</table>
@@ -234,8 +234,8 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<?php endforeach; ?>
 	<br>
 	<br>
-	<form action="/config/newTask">
-		<input class="collapsible" type="submit" value="Create new Task" />
+	<form method="post" action="/config/task">
+		<input class="collapsible" type="submit" value="Create new Task" name="new"/>
 	</form>
 </div>
 

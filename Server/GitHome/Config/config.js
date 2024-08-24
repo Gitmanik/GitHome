@@ -16,11 +16,3 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 });
-
-function deleteDevice(id)
-{
-	if (confirm(`Remove device ${id}?`))
-	{
-		window.location = '/config/deleteDevice/' + id;
-	}
-}
