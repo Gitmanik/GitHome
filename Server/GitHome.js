@@ -1,6 +1,3 @@
-const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
 function GitHome_fetch(url, data = null, method = "GET")
 {
     const formData = new FormData();
@@ -22,5 +19,4 @@ function GitHome_fetch(url, data = null, method = "GET")
             body: formData
         }).then(() => {location.reload()});
     }
-
 }
