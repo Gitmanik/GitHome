@@ -16,6 +16,8 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 
 COPY . .
 
+RUN a2enmod expires
+
 RUN chmod +x private/start.sh
 
 RUN rm Dockerfile
