@@ -92,7 +92,7 @@ class GitHome implements GitPHPAction
     public static function getDevices($handler_filter = "%")
     {
         $out = array();
-        $stmt = GitPHP::db()->prepare("SELECT * FROM devices WHERE id LIKE :filter");
+        $stmt = GitPHP::db()->prepare("SELECT * FROM devices WHERE handler LIKE :filter");
         $stmt->bindParam("filter", $handler_filter);
 
         $stmt->execute();
