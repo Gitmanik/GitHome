@@ -1,0 +1,32 @@
+.devices {
+	padding:0;
+	justify-content: center;
+	display: inline-block;
+	list-style: none;
+	display: grid;
+	grid-template-columns: repeat(3,30%);
+    grid-auto-rows: 100px;
+	grid-gap: 1%;
+	margin: auto;
+}
+
+.device {
+	overflow:hidden;
+	grid-row: span 1;
+}
+
+.device:empty {
+	display: none;
+}
+
+@media (min-width: 1200px), (orientation: landscape) {
+	.devices {
+		grid-template-columns: repeat(3,30%);
+	}
+}
+
+@media (min-width: 1500px) {
+	.devices {
+		width:70%;
+	}
+}

@@ -1,0 +1,12 @@
+FallbackResource /index.php
+
+<IfModule mod_expires.c>
+  # Enable expirations.
+  ExpiresActive On
+
+  ExpiresDefault A604800
+
+  <FilesMatch \.php$>
+    ExpiresActive Off
+  </FilesMatch>
+</IfModule>

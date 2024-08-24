@@ -1,0 +1,9 @@
+.device:has(.chart) {
+	width: 100%;
+    grid-column: 1 / -1;
+	grid-row: span 4;
+}
+
+.chart {
+	height:100%;
+}

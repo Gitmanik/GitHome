@@ -1,8 +1,8 @@
-FROM php:7.4-apache
+FROM php:8.1-apache
 WORKDIR /var/www/html
 RUN apt update
 RUN docker-php-ext-install pdo_mysql
-
+RUN apt install -y ffmpeg
 # Latest releases available at https://github.com/aptible/supercronic/releases
 ENV SUPERCRONIC_URL=https://github.com/aptible/supercronic/releases/download/v0.2.29/supercronic-linux-amd64 \
     SUPERCRONIC=supercronic-linux-amd64 \
@@ -16,7 +16,8 @@ RUN curl -fsSLO "$SUPERCRONIC_URL" \
 
 COPY . .
 
-COPY private/logging.ini /usr/local/etc/php/conf.d/logging.ini
+RUN a2enmod expires
+
 RUN chmod +x private/start.sh
 
 RUN rm Dockerfile
