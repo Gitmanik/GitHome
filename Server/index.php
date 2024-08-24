@@ -6,7 +6,7 @@ ini_set('error_log', '/proc/1/fd/1');
 error_reporting(E_ALL);
 date_default_timezone_set('Europe/Warsaw');
 
-setcookie("autologin", "saDdEbt5ocvEh7aO3E5wSSbW4u3", time() + (10 * 365 * 24 * 60 * 60));
+setcookie("autologin", getenv("autologinCookie"), time() + (10 * 365 * 24 * 60 * 60));
 
 require_once "GitPHP/GitPHP.php";
 require_once "GitHome/GitHome.php";
