@@ -187,7 +187,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<?php endforeach; ?>
 	<br>
 	<br>
-	<form action="/config/device">
+	<form method="post" action="/config/device">
 		<input class="collapsible" type="submit" value="Create new Device" name="new"/>
 	</form>
 </div>
