@@ -22,7 +22,7 @@ class GitHomeTemperature implements GitPHPAction
 
             $since = date('Y-m-d H:i:s', strtotime('-1 ' . $elements[3], time()));
     
-            echo json_encode($this->getTemperature($elements[2], $since));
+            echo json_encode(GitHomeTemperature::getTemperature($elements[2], $since));
             die;
         }
         if ($elements[1] == "add")
@@ -33,7 +33,7 @@ class GitHomeTemperature implements GitPHPAction
             if (!isset($elements[3]))
                 GitHome::die("Temperature: No value specified.");
 
-            $this->addTemperature($elements[2], $elements[3]);
+            GitHomeTemperature::addTemperature($elements[2], $elements[3]);
             die;
         }
 
@@ -42,7 +42,7 @@ class GitHomeTemperature implements GitPHPAction
 
     public function static($file){}
 
-    private function getTemperature($sensor, $since)
+    public static function getTemperature($sensor, $since)
     {
         if($stmt = GitHome::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor"))
         {
@@ -67,10 +67,11 @@ class GitHomeTemperature implements GitPHPAction
         return null;
     }
 
-    private function addTemperature($sensor, $value)
+    public static function addTemperature($sensor, $value)
     {
-        if ($stmt = GitHome::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (CURRENT_TIMESTAMP, :sensor, :value)"))
+        if ($stmt = GitHome::db()->prepare("INSERT INTO temperature (date, sensor, value) VALUES (:ts, :sensor, :value)"))
         {
+            $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindValue(":ts", $ts);
             $stmt->bindValue(':sensor', $sensor);
             $stmt->bindValue(':value', $value);
             if ($stmt->execute())
