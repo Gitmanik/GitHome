@@ -1,7 +1,6 @@
 <?
 class GitPHP 
 {
-    public static string $SQLITE_DB_PATH = "";
     private static array $actions = array();
     private static PDO $pdo;
 
@@ -72,14 +71,15 @@ class GitPHP
         {
             $username = getenv('MYSQL_USER');
             $password = getenv('MYSQL_PASSWORD');
+            $server = getenv('MYSQL_SERVER');
+            $db = getenv('MYSQL_DB');
 
-            GitPHP::$pdo = new PDO("mysql:charset=utf8mb4;host=db;dbname=smarthome", $username, $password);
+            GitPHP::$pdo = new PDO("mysql:charset=utf8mb4;host={$server};dbname={$db}", $username, $password);
             GitPHP::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
         }
         catch(PDOException $e)
         {
-            die("ERROR: Could not connect. " . $e->getMessage()); //TODO: Better exception handling
+            die("GitPHP: Could not connect to MySQL: <br>". $e->getMessage());
         }
     }
 

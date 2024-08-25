@@ -11,7 +11,6 @@ setcookie("autologin", getenv("autologinCookie"), time() + (10 * 365 * 24 * 60 *
 require_once "GitPHP/GitPHP.php";
 require_once "GitHome/GitHome.php";
 
-GitPHP::$SQLITE_DB_PATH = "/data/GitHome.db";
 try
 {
     GitHome::index();
