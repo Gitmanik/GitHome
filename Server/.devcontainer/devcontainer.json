@@ -10,6 +10,8 @@
 	"mounts": [
 		"source=${localWorkspaceFolder}/data,target=/data,type=bind"
 	],
+
+	"runArgs": ["--env-file",".devcontainer/.env"],
 	"workspaceMount": "source=${localWorkspaceFolder},target=/var/www/html,type=bind",
 	"workspaceFolder": "/var/www/html",
 	"postAttachCommand": "/var/www/html/private/start.sh",
