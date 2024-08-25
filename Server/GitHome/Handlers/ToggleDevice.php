@@ -73,7 +73,7 @@ class ToggleDevice extends GitHomeDevice
     public function toggle()
     {
         $this->state = !$this->state;
-        $this->logNormal($this->state ? "ON" : "OFF");
+        $this->logNormal("Toggled" . ($this->state ? "ON" : "OFF"));
         $this->save();
     }
 }
