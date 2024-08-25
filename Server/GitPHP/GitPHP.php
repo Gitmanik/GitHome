@@ -70,10 +70,12 @@ class GitPHP
     {
         try
         {
-            GitPHP::$pdo = new PDO("sqlite:" . GitPHP::$SQLITE_DB_PATH);
+            $username = getenv('MYSQL_USER');
+            $password = getenv('MYSQL_PASSWORD');
+
+            GitPHP::$pdo = new PDO("mysql:charset=utf8mb4;host=db;dbname=smarthome", $username, $password);
             GitPHP::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            GitPHP::$pdo->setAttribute(PDO::ATTR_TIMEOUT, 1);
-            GitPHP::$pdo->exec("PRAGMA journal_mode = WAL");
+            
         }
         catch(PDOException $e)
         {

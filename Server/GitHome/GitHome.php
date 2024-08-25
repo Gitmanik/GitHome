@@ -114,7 +114,7 @@ class GitHome implements GitPHPAction
         if($stmt = GitPHP::db()->prepare("INSERT INTO logs (device_id, data, level, date) VALUES (:id, :data, :level, :time)")){
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':data', $data);
-            $stmt->bindParam(':level', $level);
+            $stmt->bindParam(':level', $level, PDO::PARAM_INT);
             $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindParam(':time', $ts);
             $stmt->execute();
         }
@@ -123,8 +123,8 @@ class GitHome implements GitPHPAction
     public static function getLogs($maxCount, $minLevel = PHP_INT_MAX)
     {
         if($stmt = GitPHP::db()->prepare("SELECT * FROM logs WHERE level <= :level ORDER BY id DESC LIMIT :count")){
-            $stmt->bindParam(":level", $minLevel);
-            $stmt->bindParam(":count", $maxCount);
+            $stmt->bindParam(":level", $minLevel, PDO::PARAM_INT);
+            $stmt->bindParam(":count", $maxCount, PDO::PARAM_INT);
             if($stmt->execute())
             {
                 return $stmt->fetchAll();
