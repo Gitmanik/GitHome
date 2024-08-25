@@ -32,14 +32,14 @@ class RTSPDevice extends GitHomeDevice
 
     private function renderView()
     {
-        echo "
-        <div class=\"frame\" style=\"width:100%; height:100%\">
-            <img>
-        </div>
+        echo "<body style='margin:0;'>
+        <div class=\"frame\" style=\"margin:0;width:100vw;height:100vh;\">
+            <img style='margin:0;width:100vw;height:100vh;'>
+        </div></body>
         <script>
             function refreshFrame(){    
             var timestamp = new Date().getTime();  
-            var queryString = '/device/{$this->id}/frame';
+            var queryString = '/device/{$this->id}/frame?ts=' + timestamp;
             var imageElement = document.querySelector(\".frame img\");  
             
             var downloadingImage = new Image();

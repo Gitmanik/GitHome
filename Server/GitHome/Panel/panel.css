@@ -8,6 +8,7 @@
     grid-auto-rows: 100px;
 	grid-gap: 1%;
 	margin: auto;
+	grid-auto-flow: dense;
 }
 
 .device {
