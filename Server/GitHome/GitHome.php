@@ -143,7 +143,5 @@ class GitHome implements GitPHPAction
     }
 
     public static function db() { return GitPHP::db(); }
-
-    public function static($file) {}
 }
 ?>

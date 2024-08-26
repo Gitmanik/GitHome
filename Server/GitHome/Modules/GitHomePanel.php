@@ -27,6 +27,6 @@ class GitHomePanel implements GitPHPAction
         return $arr;
     }
 
-    public function static($filename) {return "/GitHome/Panel/{$filename}";}
+    public function static($filename) {return GitPHP::static("/GitHome/Panel/{$filename}");}
 }
 ?>

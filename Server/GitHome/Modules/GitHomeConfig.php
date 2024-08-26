@@ -103,7 +103,7 @@ class GitHomeConfig implements GitPHPAction
         return false;
     }
 
-    public function static($filename) {return "/GitHome/Config/{$filename}";}
+    public function static($filename) {return GitPHP::static("/GitHome/Config/{$filename}");}
 }
 
 enum CustomEditorType

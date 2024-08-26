@@ -46,9 +46,8 @@ class GitPHP
         var_dump($elements);
     }
 
-    public static function static($filename)
+    public static function static($path)
     {
-        $path = GitPHP::$current_action->static($filename);
         $modtime = filemtime($_SERVER['DOCUMENT_ROOT'] . $path);
         echo "{$path}?filever={$modtime}";
     }
@@ -99,7 +98,6 @@ class GitPHP
 interface GitPHPAction
 {
     public function render($elements);
-    public function static($file);
 }
 
 ?>

@@ -18,8 +18,6 @@ class GitHomeCron implements GitPHPAction
 
     }
 
-    public function static($file) {}
-
     private function executeTask($task)
     {
         $hour = intval(date("G"));

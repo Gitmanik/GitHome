@@ -4,13 +4,12 @@
 	<meta charset="UTF-8">
 	<title>GitHome</title>
 	<link rel="icon" type="image/png" href="/favicon.png">
-	<link rel="stylesheet" href="/main.css?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/main.css") ?>">
-	<script src="/GitHome.js?filever=<?= filemtime($_SERVER['DOCUMENT_ROOT'] ."/GitHome.js") ?>""></script>
-	
-	<link rel="stylesheet" href="<?php GitPHP::static("panel.css") ?>">
+	<link rel="stylesheet" href="<?= GitPHP::static("/main.css") ?>">
+	<link rel="stylesheet" href="<?= GitPHP::static("/GitHome.js") ?>">
+	<link rel="stylesheet" href="<?php $this->static("panel.css") ?>">
 
 	<?php foreach (glob("../Handlers/CSS/*.css") as $css): ?>
-		<link rel="stylesheet" href="<?php GitPHP::static($css) ?>">
+		<link rel="stylesheet" href="<?php $this->static($css) ?>">
 	<?php endforeach;?>
 
 </head>

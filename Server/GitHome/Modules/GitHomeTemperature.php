@@ -40,8 +40,6 @@ class GitHomeTemperature implements GitPHPAction
         GitHome::die("Temperature: No valid subaction.");
     }
 
-    public function static($file){}
-
     public static function getTemperature($sensor, $since)
     {
         $stmt = GitHome::db()->prepare("SELECT date, value FROM temperature WHERE date > :since AND sensor = :sensor");

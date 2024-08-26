@@ -7,8 +7,6 @@ class GitHomeLegacy implements GitPHPAction
         GitPHP::register_action("api", $this);
     }
 
-    public function static($file) {}
-
     public function render($elements)
     {
         if (!isset($elements[1]))
