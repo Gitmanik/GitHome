@@ -1,15 +1,5 @@
 <?php
 
-function get_devices()
-{
-    return GitHome::getDevices();
-}
-
-function get_boxes()
-{
-    return GitHome::getDevices("Box");
-}
-
 class GitHomeLegacy implements GitPHPAction
 {
     function __construct()
