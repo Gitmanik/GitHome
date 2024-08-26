@@ -67,9 +67,9 @@ class Blind extends GitHomeDevice
         echo '</div>';
 
         echo "<div class='blind_buttons'>";
-        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/UP`);">🔼</button>', $this->blindState == 1 ? 'blind_currentState' : 'blind_state', $this->id);
-        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/STOP`);">⏺️</button>', $this->blindState == 0 ? 'blind_currentState' : 'blind_state', $this->id);
-        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/DOWN`);">🔽</button>', $this->blindState == -1 ? 'blind_currentState' : 'blind_state', $this->id);
+        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/UP`);">&#x21c8</button>', $this->blindState == 1 ? 'blind_currentState' : 'blind_state', $this->id);
+        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/STOP`);">○</button>', $this->blindState == 0 ? 'blind_currentState' : 'blind_state', $this->id);
+        echo sprintf('<button class="%s" onclick="GitHome_fetch(`/device/%s/DOWN`);">&#x21ca</button>', $this->blindState == -1 ? 'blind_currentState' : 'blind_state', $this->id);
         echo "</div>";
         echo "</div>";
     }

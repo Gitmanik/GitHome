@@ -1,3 +1,11 @@
+@font-face {
+    font-family: 'open-arrow';
+    src: url('./OpenArrow-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    unicode-range: U+2190-21ff;
+  }
+
 .blind_name {
 	display: flex;
 	align-items: center;
@@ -23,6 +31,7 @@
 }
 
 .blind_buttons button {
+	font-family: 'open-arrow', 'ABeeZee';
 	height: 33.3%;
 	width: 100%;
 	border: 0;
@@ -30,6 +39,7 @@
 	text-align: center;
 	text-decoration: none;
 	display: inline-block;
+	color: white;
 }
 
 .blind_container {
