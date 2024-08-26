@@ -10,7 +10,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 	<title>GitHome - Config</title>
 	<link rel="icon" type="image/png" href="/favicon.png">
 	<link rel="stylesheet" href="<?= GitPHP::static("/main.css") ?>">
-	<link rel="stylesheet" href="<?= GitPHP::static("/GitHome.js") ?>">
+	<script src="<?GitPHP::static("/GitHome.js")?>"></script>
 	<link rel="stylesheet" href="<?$this->static("config.css")?>">
 	<script src="<?$this->static("config.js")?>"></script>
 

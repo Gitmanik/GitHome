@@ -5,7 +5,7 @@
 	<title>GitHome</title>
 	<link rel="icon" type="image/png" href="/favicon.png">
 	<link rel="stylesheet" href="<?= GitPHP::static("/main.css") ?>">
-	<link rel="stylesheet" href="<?= GitPHP::static("/GitHome.js") ?>">
+	<script src="<?GitPHP::static("/GitHome.js")?>"></script>
 	<link rel="stylesheet" href="<?php $this->static("panel.css") ?>">
 
 	<?php foreach (glob("../Handlers/CSS/*.css") as $css): ?>
