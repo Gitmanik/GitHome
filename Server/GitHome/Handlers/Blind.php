@@ -39,15 +39,15 @@ class Blind extends GitHomeDevice
         switch ($direction)
         {
             case 1:
-                $this->logNormal("Clicked UP");
+                $this->logNormal("UP");
                 $code = $this->codeUp;
                 break;
             case 0:
-                $this->logNormal("Clicked STOP");
+                $this->logNormal("STOP");
                 $code = $this->codeStop;
                 break;
             case -1:
-                $this->logNormal("Clicked DOWN");
+                $this->logNormal("DOWN");
                 $code = $this->codeDown;
                 break;
             default:
