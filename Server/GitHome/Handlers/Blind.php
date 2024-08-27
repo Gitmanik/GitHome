@@ -31,7 +31,6 @@ class Blind extends GitHomeDevice
                 $this->logError("Wrong direction! {$elements[2]}");
                 break;
         }
-        $this->save();
     }
 
     public function click($direction)

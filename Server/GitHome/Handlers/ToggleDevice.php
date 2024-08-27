@@ -16,7 +16,6 @@ class ToggleDevice extends GitHomeDevice
         {
             case 'GET':
                 $this->handleGet();
-                $this->save();
                 break;
             case 'ON':
                 $this->toggleON();
@@ -57,7 +56,6 @@ class ToggleDevice extends GitHomeDevice
         {
             $this->state = true;
             $this->logNormal("ON");
-            $this->save();
         }
     }
 
@@ -67,14 +65,12 @@ class ToggleDevice extends GitHomeDevice
         {
             $this->state = false;
             $this->logNormal("OFF");
-            $this->save();
         }
     }
     public function toggle()
     {
         $this->state = !$this->state;
         $this->logNormal("Toggled " . ($this->state ? "ON" : "OFF"));
-        $this->save();
     }
 }
 

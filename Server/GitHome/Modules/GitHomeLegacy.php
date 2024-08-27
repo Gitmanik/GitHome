@@ -64,7 +64,7 @@ class GitHomeLegacy implements GitPHPAction
         else
             $dev->legacy($elements);
 
-        $dev->save();
+        $dev->saveStatistics();
     }
 }
 

@@ -32,7 +32,6 @@ class BlindBridge extends GitHomeDevice
             // TODO: SEND PROTOCOL
             array_push($this->sendQueue, $code);
         }
-        $this->save();
     }
 }
 

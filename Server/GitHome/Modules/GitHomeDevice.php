@@ -2,6 +2,7 @@
 
 class GitHomeDevice
 {
+    private string $cleanData;
     public string $id;
     public string $handler;
     public ?string $firmware = null;
@@ -9,6 +10,15 @@ class GitHomeDevice
     public ?string $version = null;
     public ?string $lastReportTimestamp = null;
     public ?string $lastReportIP = null;
+
+    function __destruct()
+    {
+        if (json_encode($this->exportData()) != $this->cleanData)
+        {
+            error_log("kok");
+            $this->save();
+        }
+    }
 
     function __construct($row)
     {
@@ -23,6 +33,19 @@ class GitHomeDevice
         $this->lastReportTimestamp = $row["lastReportTimestamp"];
         $this->lastReportIP = $row["lastReportIP"];
         $this->loadData(json_decode($row["data"], true));
+
+        $this->cleanData = $row["data"];
+    }
+
+    public function saveStatistics()
+    {
+        $stmt = GitHome::db()->prepare("UPDATE devices SET version = :version, lastReportTimestamp = :ts, lastReportIP = :ip WHERE id = :id");
+        $stmt->bindValue(":id", $this->id);
+        $stmt->bindValue(":version", $this->version);
+        $ts = GitPHP::CURRENT_TIMESTAMP(); $stmt->bindValue(":ts", $ts);
+        $stmt->bindValue(":ip", $_SERVER['REMOTE_ADDR']);
+        
+        $stmt->execute();
     }
 
     public function save()
@@ -38,6 +61,8 @@ class GitHomeDevice
         $data = json_encode($this->exportData()); $stmt->bindValue(":data", $data);
         
         $stmt->execute();
+
+        $this->cleanData = json_encode($this->exportData());
     }
 
     public function shouldUpdate()
