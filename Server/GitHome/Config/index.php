@@ -157,12 +157,19 @@ $versions = GitHome::$firmware->listFirmware(true);
 					<div class="form_element">
 					<label for="<?=$prop?>"> <?=$prop ?>: </label>
 					<?php switch($this->isCustomCodeEditor($val)):
-					case CustomEditorType::CODE_EDITOR: ?>
-						<textarea spellcheck="false" is="highlighted-code" language="php" cols="80" rows="12" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
-						<?php break; ?>
+
+						case CustomEditorType::CODE_EDITOR: ?>
+							<textarea spellcheck="false" is="highlighted-code" language="php" cols="80" rows="12" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
+							<?php break; ?>
+
+						<?php case CustomEditorType::CHECKBOX: ?>
+							<input type="hidden" name="<?=$prop?>" value="0">
+							<input autocomplete="off" type="checkbox" id="<?=$prop?>" name="<?=$prop?>" value="1" <?= $val['value'] ? "checked" : ""?>></input>
+							<?php break; ?>
+							
 						<?php case false: ?>
 							<textarea spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
-						<?php break; ?>
+							<?php break; ?>
 					<? endswitch; ?>
 
 					</div>

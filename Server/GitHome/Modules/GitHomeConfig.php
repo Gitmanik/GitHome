@@ -100,6 +100,14 @@ class GitHomeConfig implements GitPHPAction
                 return $attrib->newInstance()->type;
         }
 
+        switch ($val["type"])
+        {
+            case "bool":
+                return CustomEditorType::CHECKBOX;
+            default:
+                break;
+        }
+
         return false;
     }
 
@@ -109,6 +117,7 @@ class GitHomeConfig implements GitPHPAction
 enum CustomEditorType
 {
     case CODE_EDITOR;
+    case CHECKBOX;
 }
 
 #[Attribute]

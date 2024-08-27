@@ -142,9 +142,11 @@ class GitHomeDevice
         {
             if ($prop->class == "GitHomeDevice")
                 continue;
+
             if ($prop->isInitialized($this))
                 $data[$prop->name] = array
                 (
+                    "type" =>   $prop->getType()->__toString(),
                     "value" => $prop->getValue($this),
                     "attributes" => $prop->getAttributes()
                 );

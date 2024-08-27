@@ -12,7 +12,7 @@ html,body {
 	margin-top: 5px;
 }
 
-.form_element :is(textarea,input[type="text"],input[type="file"],select) {
+.form_element :is(textarea,input[type="text"],input[type="file"],select, input[type="checkbox"]) {
 	float:right;
 	width:80%;
 }
