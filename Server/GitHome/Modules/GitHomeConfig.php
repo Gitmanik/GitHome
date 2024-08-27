@@ -104,6 +104,8 @@ class GitHomeConfig implements GitPHPAction
         {
             case "bool":
                 return CustomEditorType::CHECKBOX;
+            case "array":
+                return CustomEditorType::ARRAY;
             default:
                 break;
         }
@@ -118,6 +120,7 @@ enum CustomEditorType
 {
     case CODE_EDITOR;
     case CHECKBOX;
+    case ARRAY;
 }
 
 #[Attribute]

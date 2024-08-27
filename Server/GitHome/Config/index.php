@@ -167,6 +167,10 @@ $versions = GitHome::$firmware->listFirmware(true);
 							<input autocomplete="off" type="checkbox" id="<?=$prop?>" name="<?=$prop?>" value="1" <?= $val['value'] ? "checked" : ""?>></input>
 							<?php break; ?>
 							
+						<?php case CustomEditorType::ARRAY: ?>
+							<textarea disabled spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=var_export($val['value'])?></textarea>
+							<?php break; ?>
+
 						<?php case false: ?>
 							<textarea spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
 							<?php break; ?>
