@@ -74,7 +74,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 					<div class="form_element">
 						<label> Name: </label>
-						<select name="firmware" id="firmware">
+						<select name="firmware">
 							<option value=""> - </option>
 							<?php foreach ($versions as $ver): ?>
 							<option value="<?= $ver['name'] ?>"><?= strtoupper($ver['name']) ?> </option>
@@ -84,17 +84,17 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 					<div class="form_element">
 						<label> New name: </label>
-						<input type="text" name="name" id="name">
+						<input type="text" name="name">
 					</div>
 
 					<div class="form_element">
 						<label> Version: </label>
-						<input type="text" name="version" id="version">
+						<input type="text" name="version">
 					</div>
 
 					<div class="form_element">
 						<label> Data: </label>
-						<input type="file" name="fileToUpload" id="fileToUpload">
+						<input type="file" name="fileToUpload">
 					</div>
 
 					<div class="form_element text-center">
@@ -154,7 +154,7 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 				<div class="form_element">
 					<label> Version: </label>
-					<input autocomplete="off" type="text" name="version" id="version" value="<?=$dev->version?>">
+					<input autocomplete="off" type="text" name="version" value="<?=$dev->version?>">
 				</div>
 
 				<?php foreach ($dev->exportDataWithAttrib() as $prop => $val): ?>
@@ -163,20 +163,20 @@ $versions = GitHome::$firmware->listFirmware(true);
 					<?php switch($this->isCustomCodeEditor($val)):
 
 						case CustomEditorType::CODE_EDITOR: ?>
-							<textarea spellcheck="false" is="highlighted-code" language="php" cols="80" rows="12" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
+							<textarea spellcheck="false" is="highlighted-code" language="php" cols="80" rows="12" autocomplete="off" name="<?=$prop?>"><?=$val['value']?></textarea>
 							<?php break; ?>
 
 						<?php case CustomEditorType::CHECKBOX: ?>
 							<input type="hidden" name="<?=$prop?>" value="0">
-							<input autocomplete="off" type="checkbox" id="<?=$prop?>" name="<?=$prop?>" value="1" <?= $val['value'] ? "checked" : ""?>></input>
+							<input autocomplete="off" type="checkbox" name="<?=$prop?>" value="1" <?= $val['value'] ? "checked" : ""?>></input>
 							<?php break; ?>
 							
 						<?php case CustomEditorType::ARRAY: ?>
-							<textarea disabled spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=var_export($val['value'])?></textarea>
+							<textarea disabled spellcheck="false" autocomplete="off" name="<?=$prop?>"><?=var_export($val['value'])?></textarea>
 							<?php break; ?>
 
 						<?php case false: ?>
-							<textarea spellcheck="false" autocomplete="off" name="<?=$prop?>" id="<?=$prop?>"><?=$val['value']?></textarea>
+							<textarea spellcheck="false" autocomplete="off" name="<?=$prop?>"><?=$val['value']?></textarea>
 							<?php break; ?>
 					<? endswitch; ?>
 
