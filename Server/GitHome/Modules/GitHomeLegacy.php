@@ -57,6 +57,7 @@ class GitHomeLegacy implements GitPHPAction
 
         if (isset($_GET["version"]))
             $dev->version = $_GET["version"];
+        else $dev->version = null;
 
         if ($dev->shouldUpdate())
             echo "UPDATE";
