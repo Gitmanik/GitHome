@@ -121,7 +121,11 @@ $versions = GitHome::$firmware->listFirmware(true);
 
 			<form action="/config/device" method="post" enctype="multipart/form-data">
 
-				<input autocomplete="off" type="hidden" name="id" value="<?= $dev->id ?>"></input>
+				<div class="form_element">
+					<label> ID: </label>
+					<input autocomplete="off" type="hidden" name="id" value="<?= $dev->id ?>"></input>
+					<input autocomplete="off" type=text name="id" disabled value="<?=$dev->id?>"></input>
+				</div>
 
 				<div class="form_element">
 					<label> Name: </label>
