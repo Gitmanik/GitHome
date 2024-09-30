@@ -15,7 +15,6 @@ class GitHomeDevice
     {
         if (json_encode($this->exportData()) != $this->cleanData)
         {
-            error_log("kok");
             $this->save();
         }
     }
