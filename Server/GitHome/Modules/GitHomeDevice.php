@@ -128,7 +128,7 @@ class GitHomeDevice
     public function loadData($data)
     {
         if (!isset($data))
-            GitHome::die("Tried to load unset data!");
+            $data = array();
 
         $reflect = new ReflectionClass($this);
         $props = $reflect->getProperties(ReflectionProperty::IS_PUBLIC);
