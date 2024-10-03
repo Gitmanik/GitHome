@@ -22,6 +22,11 @@ class GitPHP
 
         $elements = explode('/', $path);
 
+        GitPHP::handleElements($elements);
+    }
+
+    public static function handleElements($elements)
+    {
         if ($elements[0] == "")
         {
             if (GitPHP::get_action("default") == null)
