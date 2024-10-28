@@ -78,7 +78,7 @@ class GitPHP
             $server = getenv('MYSQL_SERVER');
             $db = getenv('MYSQL_DB');
 
-            GitPHP::$pdo = new PDO("mysql:charset=utf8mb4;host={$server};dbname={$db}", $username, $password);
+            GitPHP::$pdo = new PDO("pgsql:host={$server};port=5432;dbname={$db};", $username, $password);
             GitPHP::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         catch(PDOException $e)
